@@ -1,5 +1,6 @@
 package top.itning.yunshuclassschedule.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.ConstantPool
 import top.itning.yunshuclassschedule.entity.EventEntity
@@ -36,6 +38,10 @@ class CheckScoreFragment : Fragment(), EventReceiver {
         Log.d(TAG, "on Destroy")
         EventBus.getDefault().unregister(this)
         super.onDestroy()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(LocaleHelper.applyAppLocale(context))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

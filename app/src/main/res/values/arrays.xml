@@ -159,4 +159,15 @@
         <item>#cccccc</item>
         <item>#798387</item>
     </string-array>
+
+    <string-array name="entries_list_language">
+        <item>跟随系统</item>
+        <item>中文</item>
+        <item>English</item>
+    </string-array>
+    <string-array name="entries_values_language">
+        <item>system</item>
+        <item>zh</item>
+        <item>en</item>
+    </string-array>
 </resources>

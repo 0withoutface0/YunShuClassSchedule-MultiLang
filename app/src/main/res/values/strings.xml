@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">云舒课表</string>
     <string name="navigation_drawer_open">打开导航抽屉</string>
@@ -19,6 +20,7 @@
     <string name="about_create">软件施工：ITNING 舒露</string>
     <string name="about_prototype_design">原型设计：舒露</string>
     <string name="about_test">软件测试：舒露</string>
+    <string name="about_translator">翻译: 0withoutface0</string>
     <string name="about_github">Github：YunShuClassSchedule</string>
     <string name="about_series">Yun Shu™ SoftWare Series</string>
     <string name="about_copyrights">© 2018 ITNING.TOP ALL RIGHTS RESERVED</string>
@@ -59,4 +61,203 @@
     <string name="dialog_class_schedule_clear">清空选择</string>
     <string name="dialog_class_schedule_range">区间</string>
     <string name="widget_today_none_class">今天没有课</string>
+
+    <string name="pref_category_courses">课程设置</string>
+    <string name="pref_default_page">默认展示课程页面</string>
+    <string name="pref_choose_default_page">选择默认展示课程页面</string>
+    <string name="pref_reset_class_time">重新设置课时</string>
+    <string name="pref_reset_class_time_summary">设置上下课时间</string>
+    <string name="pref_import_export">导入导出课程数据</string>
+    <string name="pref_import_export_summary">备份或者分享课程数据</string>
+    <string name="pref_set_current_week">设置当前周数</string>
+
+    <string name="pref_category_reminder">上下课提醒与静音</string>
+    <string name="pref_class_reminder">上下课提醒</string>
+    <string name="pref_class_reminder_summary">设置上下课提前提醒通知</string>
+    <string name="pref_class_reminder_up_category">上课提醒</string>
+    <string name="pref_class_reminder_up_status">上课提醒通知</string>
+    <string name="pref_class_reminder_up_status_on">上课提醒通知已开启</string>
+    <string name="pref_class_reminder_up_status_off">上课提醒通知已关闭</string>
+    <string name="pref_class_reminder_up_time">提醒时间设置</string>
+    <string name="pref_class_reminder_up_time_dialog">选择上课提醒通知发出时间</string>
+    <string name="pref_class_reminder_down_category">下课提醒</string>
+    <string name="pref_class_reminder_down_status">下课提醒通知</string>
+    <string name="pref_class_reminder_down_status_on">下课提醒通知已开启</string>
+    <string name="pref_class_reminder_down_status_off">下课提醒通知已关闭</string>
+    <string name="pref_class_reminder_down_time">提醒时间设置</string>
+    <string name="pref_class_reminder_down_time_dialog">选择下课提醒通知发出时间</string>
+
+    <string name="pref_phone_mute">上课时手机自动静音</string>
+    <string name="pref_phone_mute_summary">设置上课手机自动静音</string>
+    <string name="pref_phone_mute_category">手机自动静音设置</string>
+    <string name="pref_phone_mute_status">上课手机自动静音</string>
+    <string name="pref_phone_mute_status_on">上课手机自动静音已开启</string>
+    <string name="pref_phone_mute_status_off">上课手机自动静音已关闭</string>
+    <string name="pref_phone_mute_before_time">上课前静音时间设置</string>
+    <string name="pref_phone_mute_before_time_dialog">选择上课开启静音时间</string>
+    <string name="pref_phone_mute_after_time">下课前解除静音时间设置</string>
+    <string name="pref_phone_mute_after_time_dialog">选择下课解除静音时间</string>
+
+    <string name="pref_foreground_service">提醒服务后台常驻</string>
+    <string name="pref_foreground_service_on">通知栏服务常驻已开启</string>
+    <string name="pref_foreground_service_off">通知栏服务常驻已关闭</string>
+
+    <string name="pref_category_personalization">个性化设置</string>
+    <string name="pref_theme_color">主题颜色</string>
+    <string name="pref_theme_color_primary">主色调</string>
+    <string name="pref_theme_color_secondary">次色调</string>
+    <string name="pref_theme_color_accent">强调色</string>
+    <string name="pref_theme_color_progress">进度条颜色</string>
+
+    <string name="pref_category_other">其它</string>
+    <string name="pref_feedback">反馈建议</string>
+    <string name="pref_check_update">检查更新</string>
+    <string name="pref_about">关于</string>
+
+    <string name="pref_language">语言</string>
+    <string name="pref_language_summary">选择应用语言</string>
+
+    <!-- Main title/date -->
+    <string name="title_back_to_current_week">回到当前周</string>
+    <string name="title_jump_to_other_week">快速跳转到其它周</string>
+
+    <!-- Menu toggle -->
+    <string name="menu_show_teacher">显示授课教师</string>
+    <string name="menu_hide_teacher">隐藏授课教师</string>
+
+    <!-- Exit tip -->
+    <string name="press_again_to_exit">再按一次退出</string>
+
+    <!-- Storage permission -->
+    <string name="perm_storage_title">需要外置存储权限</string>
+    <string name="perm_storage_message">请授予外置存储权限,才能够更换背景图片</string>
+
+    <!-- Background image -->
+    <string name="bg_image_set_fail">背景图片设置失败</string>
+
+    <!-- Font size dialog -->
+    <string name="dialog_change_font_size">更改字体大小</string>
+    <string name="label_font_size">字体大小:%1$.0f</string>
+
+    <!-- Toolbar date patterns -->
+    <string name="date_pattern_zh">MM月dd日 E</string>
+    <string name="date_pattern_default">MMM dd, E</string>
+
+    <string name="date_format_pattern">MM月dd日 E</string>
+
+    <string name="channel_class_reminder">课程提醒</string>
+    <string name="channel_foreground_service">前台服务</string>
+    <string name="error_not_implemented">尚未实现</string>
+
+    <string name="notification_class_up_title">上课提醒</string>
+    <string name="notification_class_up_text">%1$s %2$s</string>
+
+    <string name="notification_class_down_title">下课提醒</string>
+    <string name="notification_class_down_text">快要下课了</string>
+
+    <string name="toast_clear_cache_failed">清理缓存数组失败</string>
+    <string name="toast_init_time_failed">初始化时间数据失败</string>
+
+    <!-- Screens / titles -->
+    <string name="title_about">关于</string>
+    <string name="title_settings">设置</string>
+    <string name="title_share_timetable">分享课程表</string>
+
+    <!-- CustomActivity -->
+    <string name="title_class_period_setup">课时设置</string>
+    <string name="dialog_set_class_count_title">设置每天课程节数</string>
+    <string name="action_save">保存</string>
+    <string name="row_period_up_fmt">第%1$s节上课</string>
+    <string name="row_period_down_fmt">第%1$s节下课</string>
+    <string name="tp_title_prefix_period_fmt">第%1$s节</string>
+    <string name="tp_title_suffix_up">上课</string>
+    <string name="tp_title_suffix_down">下课</string>
+
+    <!-- MainActivity (tip for the TapTarget) -->
+    <string name="hint_toolbar_long_press">长按时间标题可以跳转到其它周，在其它周按一次标题即可回到当前周</string>
+
+    <!-- File pickers / chooser -->
+    <string name="chooser_import_title">选择课程数据文件进行导入</string>
+    <string name="chooser_share_title">分享课程数据文件</string>
+
+    <!-- Common toasts / dialogs -->
+    <string name="toast_no_file_manager">没有找到文件管理APP</string>
+    <string name="toast_parse_failed">解析失败</string>
+    <string name="toast_export_failed">导出失败</string>
+    <string name="toast_export_success">导出成功</string>
+    <string name="toast_import_success">导入成功</string>
+    <string name="toast_write_section_failed">写入课程节数失败,请重试</string>
+    <string name="toast_write_db_failed">写入数据库失败,请重试</string>
+    <string name="dialog_warning">警告</string>
+    <string name="dialog_import_warning">即将导入课程数据，这会将原有课程信息清空，确定导入吗？</string>
+
+    <!-- ShareActivity / LoginActivity file names -->
+    <string name="export_base_filename">云舒课表课程数据</string>
+    <string name="export_file_ext">.json</string>
+    <string name="toast_parse_max_12_periods">最大课程数为12节课，解析失败</string>
+    <string name="toast_generate_data_failed">生成数据失败</string>
+    <string name="toast_save_course_count_fail">写入课程节数失败,请重试</string>
+
+    <string name="label_week">星期%1$s</string>
+    <string name="label_period">第%1$s节课</string>
+    <string name="toast_set_course_weeks">请设置课程周数</string>
+    <string name="error_empty_name">请输入课程名</string>
+    <string name="error_empty_location">请输入地点</string>
+    <string name="error_empty_teacher">请输入教师</string>
+    <string name="dialog_ok">确定</string>
+    <string name="dialog_cancel">取消</string>
+    <string name="dialog_delete">删除</string>
+    <string name="dialog_delete_title">删除确认</string>
+    <string name="dialog_delete_message">确定删除星期%1$s的第%2$s节课么?</string>
+    <string name="toast_copied">已复制</string>
+    <string name="toast_pasted">已粘贴</string>
+    <string name="label_drag_set_weeks">拖动滑块设置课程周数</string>
+    <string name="label_course_week_range">课程从第%1$s周到第%2$s周</string>
+    <string name="dialog_set_week_range">设置课程周数区间</string>
+    <string name="error_internal_data">内部数据错误,请联系开发者</string>
+
+    <!-- Tabs -->
+    <string name="tab_today">今天</string>
+    <string name="tab_this_week">本周</string>
+    <string name="tab_week_number">第%1$s周</string>
+
+    <!-- Toasts / errors -->
+    <string name="toast_adapter_not_found">未找到适配器，尝试重新打开APP解决此问题</string>
+    <string name="toast_image_load_failed">图片加载失败</string>
+
+    <string name="notice_title">注意</string>
+    <string name="notice_message_disable_service">关闭后台常驻会导致提醒服务，手机自动静音服务不准确。建议您不要关闭！</string>
+    <string name="notice_got_it">我知道了</string>
+    <string name="error_invalid_weeknum">设置的值必须大于1且小于50</string>
+    <string name="label_weeknum_summary">第%1$s周</string>
+    <string name="toast_grant_dnd_permission">请授予免打扰权限</string>
+    <string name="toast_reenable_auto_silent">权限授予后请重新开启自动静音</string>
+
+    <string name="notification_reminder_service_running">提醒服务正在运行</string>
+
+    <string name="error_title">错误</string>
+    <string name="ok">确定</string>
+    <string name="error_time_conflict_same_class">第%1$s节课上下课时间冲突,请检查</string>
+    <string name="error_time_conflict_adjacent_class">第%1$s节课下课和第%2$s节课时间冲突,请检查</string>
+
+    <string name="error_read_image_failed">读取图片失败</string>
+    <string name="error_image_too_large">图片太大了</string>
+    <string name="error_image_write_failed">图片写入失败</string>
+    <string name="error_write_cache_failed">写入缓存失败: %1$s</string>
+
+    <string name="preview_next_class">下节课</string>
+    <string name="preview_course_name">数据库原理与应用</string>
+    <string name="preview_course_location">A301</string>
+    <string name="preview_course_time_remaining">距离上课还有14分钟</string>
+
+    <string name="no_course_data">没有课程数据</string>
+    <string name="swipe_right_tip">请滑动到右侧</string>
+    <string name="long_press_to_add_course">长按空白处添加课程</string>
+    <string name="all_classes_finished">今天课全都上完了</string>
+    <string name="no_classes_today">今天没有课</string>
+    <string name="next_class">下节课</string>
+    <string name="last_class">这是最后一节课</string>
+    <string name="time_until_class">还有%1$d分钟上课</string>
+    <string name="time_until_end">还有%1$d分钟下课</string>
+
 </resources>

@@ -23,6 +23,7 @@ import kotlinx.android.synthetic.main.fragment_today.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
@@ -94,6 +95,10 @@ class TodayFragment : Fragment() {
         requireActivity().bindService(Intent(requireActivity(), CourseInfoService::class.java), courseInfoConnection, Context.BIND_AUTO_CREATE)
         EventBus.getDefault().register(this)
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(LocaleHelper.applyAppLocale(context))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -38,7 +38,7 @@ class AboutActivity : BaseActivity() {
         val supportActionBar = supportActionBar
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true)
-            supportActionBar.title = "关于"
+            supportActionBar.title = getString(R.string.title_about)
         }
         tv_version.text = getPackageVersionName(this)
         cv_href.setOnClickListener { onCvHrefClicked() }

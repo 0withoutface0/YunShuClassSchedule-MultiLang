@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.CheckResult
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.PreferenceManager
+import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
 import top.itning.yunshuclassschedule.entity.ClassSchedule
@@ -254,14 +255,14 @@ object DateUtils {
      */
     private fun showTimeErrorDialog(whichClass: String, type: Int, context: Context) {
         val builder = AlertDialog.Builder(context)
-                .setTitle("错误")
+                .setTitle(context.getString(R.string.error_title))
         if (type == 1) {
-            builder.setMessage("第" + whichClass + "节课上下课时间冲突,请检查")
+            builder.setMessage(context.getString(R.string.error_time_conflict_same_class, whichClass))
 
         } else {
-            builder.setMessage("第" + whichClass + "节课下课和" + (Integer.parseInt(whichClass) + 1) + "节课时间冲突,请检查")
+            builder.setMessage(context.getString(R.string.error_time_conflict_adjacent_class,whichClass,(whichClass.toInt() + 1).toString()))
         }
-        builder.setPositiveButton("确定", null)
+        builder.setPositiveButton(context.getString(R.string.ok), null)
                 .show()
     }
 

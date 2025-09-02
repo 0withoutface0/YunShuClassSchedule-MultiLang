@@ -379,8 +379,8 @@ object ClassScheduleUtils {
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
         val pendingIntent = PendingIntent.getActivity(service, 88, intent, PendingIntent.FLAG_UPDATE_CURRENT)
         val builder = NotificationCompat.Builder(service, "foreground_service")
-                .setContentTitle("云舒课表")
-                .setContentText("提醒服务正在运行")
+                .setContentTitle(service.getString(R.string.app_name))
+                .setContentText(service.getString(R.string.notification_reminder_service_running))
                 .setVisibility(NotificationCompat.VISIBILITY_SECRET)
                 .setSmallIcon(R.drawable.notification_icon)
                 .setLargeIcon(BitmapFactory.decodeResource(service.resources, R.mipmap.logo))

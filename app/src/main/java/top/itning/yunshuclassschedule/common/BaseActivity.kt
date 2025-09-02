@@ -5,10 +5,13 @@ import android.os.Bundle
 
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.entity.EventEntity
 import top.itning.yunshuclassschedule.service.CommonService
 import top.itning.yunshuclassschedule.service.RemindService
 import top.itning.yunshuclassschedule.service.TodayWidgetService
+import android.content.Context
+
 
 /**
  * Base App Activity
@@ -22,6 +25,10 @@ abstract class BaseActivity : AppCompatActivity() {
         startService(Intent(this, CommonService::class.java))
         startService(Intent(this, RemindService::class.java))
         startService(Intent(this, TodayWidgetService::class.java))
+    }
+    // Override locale
+    override fun attachBaseContext(newBase: Context) {
+        super.attachBaseContext(LocaleHelper.applyAppLocale(newBase))
     }
 
     /**

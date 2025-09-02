@@ -126,10 +126,16 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             }
             ConstantPool.Int.CLASS_UP_REMIND -> {
                 val classSchedule = eventEntity.data as ClassSchedule
-                sendNotification("上课提醒", classSchedule.name + " " + classSchedule.location)
+                sendNotification(
+                    getString(R.string.notification_class_up_title),
+                    getString(R.string.notification_class_up_text, classSchedule.name, classSchedule.location)
+                )
             }
             ConstantPool.Int.CLASS_DOWN_REMIND -> {
-                sendNotification("下课提醒", "快要下课了")
+                sendNotification(
+                    getString(R.string.notification_class_down_title),
+                    getString(R.string.notification_class_down_text)
+                )
             }
             ConstantPool.Int.REFRESH_CLASS_SCHEDULE_FRAGMENT -> run { initData() }
             else -> {
@@ -234,7 +240,7 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
                 if (nowSection >= timeList.size) {
                     timeList.forEach { Log.e(TAG, it) }
                     CrashReport.postCatchedException(Throwable("obsoleteClear failure: nowSection $nowSection timeList.size ${timeList.size}"))
-                    Toast.makeText(this, "清理缓存数组失败", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.toast_clear_cache_failed), Toast.LENGTH_SHORT).show()
                     tempList.clear()
                     tempList.addAll(classScheduleList)
                     break
@@ -270,7 +276,7 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             if (nowSection >= defaultTimeList.size) {
                 defaultTimeList.forEach { Log.e(TAG, it) }
                 CrashReport.postCatchedException(Throwable("initTimeList failure: nowSection $nowSection defaultTimeList.size ${defaultTimeList.size}"))
-                Toast.makeText(this, "初始化时间数据失败", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.toast_init_time_failed), Toast.LENGTH_SHORT).show()
                 break
             }
             val timeArray = defaultTimeList[classSchedule.section - 1].split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()

@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.preference.*
 import org.greenrobot.eventbus.EventBus
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
@@ -45,10 +46,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             val foregroundServiceStatus: Preference = findPreference<SwitchPreference>(FOREGROUND_SERVICE_STATUS)!!
             foregroundServiceStatus.setOnPreferenceChangeListener { _, newValue ->
                 if (!(newValue as Boolean)) {
-                    AlertDialog.Builder(requireContext()).setTitle("注意")
-                            .setMessage("关闭后台常驻会导致提醒服务，手机自动静音服务不准确。建议您不要关闭！")
+                    AlertDialog.Builder(requireContext()).setTitle(getString(R.string.notice_title))
+                            .setMessage(getString(R.string.notice_message_disable_service))
                             .setCancelable(true)
-                            .setPositiveButton("我知道了", null)
+                            .setPositiveButton(getString(R.string.notice_got_it), null)
                             .show()
                 }
                 true
@@ -56,13 +57,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             nowWeekNumEditTextPreference = findPreference(NOW_WEEK_NUM)!!
             nowWeekNumEditTextPreference.setOnPreferenceChangeListener { _, newValue ->
                 if (newValue.toString() == "" || (Integer.valueOf(newValue.toString())) > 50) {
-                    Toast.makeText(requireContext(), "设置的值必须大于1且小于50", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), getString(R.string.error_invalid_weeknum), Toast.LENGTH_LONG).show()
                     false
                 } else {
                     true
                 }
             }
-            nowWeekNumEditTextPreference.summary = "第${prefs.getString(NOW_WEEK_NUM, "1")}周"
+            nowWeekNumEditTextPreference.summary = getString(R.string.label_weeknum_summary, prefs.getString(NOW_WEEK_NUM, "1"))
         } else {
             when (bundle.getString(ARG_PREFERENCE_ROOT)) {
                 "class_reminder" -> {
@@ -79,8 +80,8 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                         if (newValue as Boolean) {
                             val notificationManager = requireContext().getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N && !notificationManager.isNotificationPolicyAccessGranted) {
-                                Toast.makeText(requireContext(), "请授予免打扰权限", Toast.LENGTH_LONG).show()
-                                Toast.makeText(requireContext(), "权限授予后请重新开启自动静音", Toast.LENGTH_LONG).show()
+                                Toast.makeText(requireContext(), getString(R.string.toast_grant_dnd_permission), Toast.LENGTH_LONG).show()
+                                Toast.makeText(requireContext(), getString(R.string.toast_reenable_auto_silent), Toast.LENGTH_LONG).show()
                                 startActivity(Intent(Settings.ACTION_NOTIFICATION_POLICY_ACCESS_SETTINGS))
                                 return@setOnPreferenceChangeListener false
                             } else {
@@ -108,6 +109,22 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             setPreferencesFromResource(R.xml.preference_settings, rootKey)
         } else {
             setPreferencesFromResource(R.xml.preference_settings, bundle.getString(ARG_PREFERENCE_ROOT))
+        }
+        //Changes locale to user defined one.
+        val langPref = findPreference<androidx.preference.ListPreference>("app_language")
+        langPref?.setOnPreferenceChangeListener { _, newValue ->
+            LocaleHelper.saveLang(requireContext(), newValue as String)
+            //requireActivity().recreate()
+            // 2) Restart the whole task so every Activity/Fragment reloads with the new locale
+            val ctx = requireActivity()
+            val launch = ctx.packageManager.getLaunchIntentForPackage(ctx.packageName)?.apply {
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            }
+            if (launch != null) {
+                startActivity(launch)
+                ctx.overridePendingTransition(0, 0) // no animation
+            }
+            true
         }
     }
 

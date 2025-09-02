@@ -242,7 +242,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         try {
             //没有课程数据
             if (classScheduleDao.count() == 0L) {
-                putStr2Map(courseArray, "(ヾﾉ･ω･`)", "没有课程数据", "请滑动到右侧", "长按空白处添加课程")
+                putStr2Map(courseArray, "(ヾﾉ･ω･`)", getString(R.string.no_course_data),getString(R.string.swipe_right_tip),getString(R.string.long_press_to_add_course))
                 return
             }
             //今天有课
@@ -254,7 +254,10 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                 } else {
                     //当前时间在最后一节课之后
                     if (isAfterTheLastCourse) {
-                        putStr2Map(courseArray, "", "今天课全都上完了", "(๑•̀ㅂ•́)و✧", "")
+                        putStr2Map(courseArray, "",
+                            getString(R.string.all_classes_finished),
+                            "(๑•̀ㅂ•́)و✧",
+                            "")
                     } else {
                         //当前时间在某课程中
                         if (isInAnyCourses) {
@@ -273,7 +276,10 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
                     }
                 }
             } else {//今天没有课
-                putStr2Map(courseArray, "", "今天没有课", "ヾ(≧∇≦*)ゝ", "")
+                putStr2Map(courseArray, "",
+                    getString(R.string.no_classes_today),
+                    "ヾ(≧∇≦*)ゝ",
+                    "")
             }
         } catch (e: Exception) {
             Log.e(TAG, "get exception: ", e)
@@ -292,7 +298,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         val classSchedule = soredClassSchedules[0]
         val startFirstTime = DateUtils.timeList[classSchedule.section - 1].split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
         val theRestOfTheTime = DateUtils.getTheRestOfTheTime(nowDate, startFirstTime)
-        putStr2Map(courseArray, "下节课", classSchedule.name, classSchedule.location, "还有" + theRestOfTheTime + "分钟上课")
+        putStr2Map(courseArray, getString(R.string.next_class), classSchedule.name, classSchedule.location, getString(R.string.time_until_class, theRestOfTheTime))
     }
 
     /**
@@ -309,7 +315,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             if (DateUtils.isBelongCalendar(nowDate, DateUtils.DF.parse(times[0]), DateUtils.DF.parse(times[1]))) {
                 val classSchedule = classScheduleList[i + 1]
                 val theRestOfTheTime = DateUtils.getTheRestOfTheTime(nowDate, times[1])
-                putStr2Map(courseArray, "下节课", classSchedule.name, classSchedule.location, "还有" + theRestOfTheTime + "分钟下课")
+                putStr2Map(courseArray, getString(R.string.next_class), classSchedule.name, classSchedule.location, getString(R.string.time_until_end, theRestOfTheTime))
                 break
             }
         }
@@ -325,7 +331,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         val classSchedule = classScheduleList[classScheduleList.size - 1]
         val endTime = DateUtils.timeList[classSchedule.section - 1].split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[1]
         val theRestOfTheTime = DateUtils.getTheRestOfTheTime(nowDate, endTime)
-        putStr2Map(courseArray, "", "这是最后一节课", "还有" + theRestOfTheTime + "分钟下课", "")
+        putStr2Map(courseArray, "", getString(R.string.last_class), getString(R.string.time_until_end, theRestOfTheTime), "")
     }
 
     /**
@@ -345,7 +351,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             val times2 = DateUtils.timeList[nextClassSchedule.section - 1].split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             if (DateUtils.isBelongCalendar(nowDate, DateUtils.DF.parse(times[1]), DateUtils.DF.parse(times2[0]))) {
                 val theRestOfTheTime = DateUtils.getTheRestOfTheTime(nowDate, times2[0])
-                putStr2Map(courseArray, "下节课", nextClassSchedule.name, nextClassSchedule.location, "还有" + theRestOfTheTime + "分钟上课")
+                putStr2Map(courseArray, getString(R.string.next_class), nextClassSchedule.name, nextClassSchedule.location, getString(R.string.time_until_end, theRestOfTheTime))
                 break
             }
         }
@@ -427,6 +433,6 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
 
     companion object {
         private const val TAG = "CourseInfoService"
-        private const val NO_COURSE_DATA = "没有课程数据"
+        private const val NO_COURSE_DATA = "no_course_data"
     }
 }

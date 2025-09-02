@@ -85,7 +85,7 @@ class CustomActivity : BaseActivity(), TimePickerDialog.OnTimeSetListener {
         val supportActionBar = supportActionBar
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true)
-            supportActionBar.title = "课时设置"
+            supportActionBar.title = getString(R.string.title_class_period_setup)
         }
         val appCompatSpinner = AppCompatSpinner(this)
         val list = listOf(5, 6, 7, 8, 9, 10, 11, 12)
@@ -98,10 +98,10 @@ class CustomActivity : BaseActivity(), TimePickerDialog.OnTimeSetListener {
             index
         }
         appCompatSpinner.setSelection(i)
-        AlertDialog.Builder(this).setTitle("设置每天课程节数")
+        AlertDialog.Builder(this).setTitle(getString(R.string.dialog_set_class_count_title))
                 .setView(appCompatSpinner)
                 .setCancelable(false)
-                .setPositiveButton("保存") { dialog, _ ->
+                .setPositiveButton(getString(R.string.action_save)) { dialog, _ ->
                     classSchedule = (appCompatSpinner.selectedItem as Int)
                     initData()
                     dialog.cancel()
@@ -111,8 +111,8 @@ class CustomActivity : BaseActivity(), TimePickerDialog.OnTimeSetListener {
     }
 
     private fun getOneClass(classText: CharSequence, upTime: CharSequence, downTime: CharSequence) {
-        val up = getOneRowRelativeLayout("第${classText}节上课", upTime, View.OnClickListener { onViewClicked("$classText-s") })
-        val down = getOneRowRelativeLayout("第${classText}节下课", downTime, View.OnClickListener { onViewClicked("$classText-x") })
+        val up = getOneRowRelativeLayout(getString(R.string.row_period_up_fmt, classText), upTime, View.OnClickListener { onViewClicked("$classText-s") })
+        val down = getOneRowRelativeLayout(getString(R.string.row_period_down_fmt, classText), downTime, View.OnClickListener { onViewClicked("$classText-x") })
         up.tag = "$classText-s"
         down.tag = "$classText-x"
         ll.addView(up)
@@ -213,11 +213,11 @@ class CustomActivity : BaseActivity(), TimePickerDialog.OnTimeSetListener {
      */
     private fun showTimePickerDialog() {
         val type = msg.split("-".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-        val stringBuilder = StringBuilder(6).append("第${type[0]}节")
+        val stringBuilder = StringBuilder(6).append(getString(R.string.tp_title_prefix_period_fmt, type[0]))
         if (type[1] == "s") {
-            stringBuilder.append("上课")
+            stringBuilder.append(getString(R.string.tp_title_suffix_up))
         } else {
-            stringBuilder.append("下课")
+            stringBuilder.append(getString(R.string.tp_title_suffix_down))
         }
         val timePickerDialog = getTimePickerDialog(type[1], timeMap[type[0].toInt()]!!)
         timePickerDialog.title = stringBuilder.toString()

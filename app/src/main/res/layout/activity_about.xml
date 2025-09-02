@@ -76,6 +76,15 @@
                 android:layout_below="@id/tv_prototype_design"
                 android:text="@string/about_test"
                 android:textSize="15sp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_app_translation"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_prototype_design"
+                android:layout_marginTop="22dp"
+                android:text="@string/about_translator"
+                android:textSize="15sp" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
 

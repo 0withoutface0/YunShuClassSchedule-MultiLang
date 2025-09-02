@@ -1,5 +1,6 @@
 package top.itning.yunshuclassschedule.ui.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Parcelable
 import android.util.Log
@@ -16,6 +17,7 @@ import kotlinx.android.synthetic.main.fragment_class_schedule.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.ConstantPool
 import top.itning.yunshuclassschedule.entity.EventEntity
@@ -42,8 +44,6 @@ class ClassScheduleFragment : Fragment() {
 
     init {
         titleList = ArrayList()
-        titleList.add("今天")
-        titleList.add("本周")
         fragmentList = ArrayList()
         fragmentList.add(TodayFragment())
         fragmentList.add(ThisWeekFragment())
@@ -54,7 +54,17 @@ class ClassScheduleFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_class_schedule, container, false)
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(LocaleHelper.applyAppLocale(context))
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
+        if (titleList.isEmpty()) {
+            titleList.add(getString(R.string.tab_today))
+            titleList.add(getString(R.string.tab_this_week))
+        }
+
         ThemeChangeUtil.setTabLayoutColor(requireContext(), tl)
         initData()
         //设置默认展示页面
@@ -120,16 +130,16 @@ class ClassScheduleFragment : Fragment() {
             ConstantPool.Int.REFRESH_CLASS_SCHEDULE_FRAGMENT -> {
                 val adapter = vp.adapter
                 if (adapter == null) {
-                    Toast.makeText(requireContext(), "未找到适配器，尝试重新打开APP解决此问题", Toast.LENGTH_LONG).show()
+                    Toast.makeText(requireContext(), getString(R.string.toast_adapter_not_found), Toast.LENGTH_LONG).show()
                     return
                 }
                 adapter.notifyDataSetChanged()
             }
             ConstantPool.Int.CLASS_WEEK_CHANGE -> {
                 if (PreferenceManager.getDefaultSharedPreferences(context).getString(NOW_WEEK_NUM, "1") == eventEntity.msg) {
-                    tl.getTabAt(1)?.text = "本周"
+                    tl.getTabAt(1)?.text = getString(R.string.tab_this_week)
                 } else {
-                    tl.getTabAt(1)?.text = "第${eventEntity.msg}周"
+                    tl.getTabAt(1)?.text = getString(R.string.tab_week_number, eventEntity.msg)
                 }
             }
             else -> {

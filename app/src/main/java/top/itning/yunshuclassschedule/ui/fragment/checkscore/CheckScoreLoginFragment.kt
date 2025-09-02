@@ -46,6 +46,9 @@ import java.util.*
  *
  * @author itning
  */
+/**
+ * note by withoutface: I left these in chinese cause they cant be used elsewhere anyway.
+ */
 class CheckScoreLoginFragment : Fragment() {
     private var cookies: MutableMap<String, String>? = null
     private var name: String? = null

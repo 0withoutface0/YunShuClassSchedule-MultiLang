@@ -71,7 +71,11 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
         val tlteacher = inflate.findViewById<TextInputLayout>(R.id.tl_teacher)
         //设置内容文字
         setText(tvteacher, tvlocation, tvname, classSplit)
-        alertDialog.setTitle(StringBuilder(7).append("星期").append(classSplit[1]).append("第").append(classSplit[0]).append("节课"))
+        alertDialog.setTitle(
+            StringBuilder(32)
+                .append(activity.getString(R.string.label_week, classSplit[1]))
+                .append(activity.getString(R.string.label_period, classSplit[0]))
+        )
         alertDialog.show()
         alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
             var isUnChecked = true
@@ -83,7 +87,7 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
                 }
             }
             if (isUnChecked) {
-                Toast.makeText(activity, "请设置课程周数", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.toast_set_course_weeks), Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
             if (isInputError(tvteacher, tvlocation, tvname, tlname, tllocation, tlteacher)) {
@@ -105,15 +109,15 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
         tllocation.error = null
         tlteacher.error = null
         if ("" == tvname.text.toString()) {
-            tlname.error = "请输入课程名"
+            tlname.error = activity.getString(R.string.error_empty_name)
             return true
         }
         if ("" == tvlocation.text.toString()) {
-            tllocation.error = "请输入地点"
+            tllocation.error = activity.getString(R.string.error_empty_location)
             return true
         }
         if ("" == tvteacher.text.toString()) {
-            tlteacher.error = "请输入教师"
+            tlteacher.error = activity.getString(R.string.error_empty_teacher)
             return true
         }
         return false
@@ -200,19 +204,22 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
         initBtnAction(tvteacher, tvlocation, tvname)
         alertDialog = AlertDialog.Builder(activity)
                 .setView(inflate)
-                .setPositiveButton("确定", null)
-                .setNegativeButton("取消", null)
-                .setNeutralButton("删除") { _, _ ->
+                .setPositiveButton(activity.getString(R.string.dialog_ok), null)
+                .setNegativeButton(activity.getString(R.string.dialog_cancel), null)
+                .setNeutralButton(activity.getString(R.string.dialog_delete)) { _, _ ->
                     if (selectClassSchedule != null) {
                         AlertDialog.Builder(activity)
-                                .setTitle("删除确认")
-                                .setMessage("确定删除星期" + selectClassSchedule!!.week + "的第" + selectClassSchedule!!.section + "节课么?")
-                                .setPositiveButton("确定") { _, _ ->
+                                .setTitle(activity.getString(R.string.dialog_delete_title))
+                                .setMessage(activity.getString(
+                                    R.string.dialog_delete_message,
+                                    selectClassSchedule!!.week.toString(),
+                                    selectClassSchedule!!.section.toString()))
+                                .setPositiveButton(activity.getString(R.string.dialog_ok)) { _, _ ->
                                     classScheduleDao.delete(selectClassSchedule)
                                     EventBus.getDefault().post(EventEntity(ConstantPool.Int.REFRESH_CLASS_SCHEDULE_FRAGMENT))
                                     selectClassSchedule = null
                                 }
-                                .setNegativeButton("取消", null)
+                                .setNegativeButton(activity.getString(R.string.dialog_cancel), null)
                                 .show()
                     }
                 }.create()
@@ -248,7 +255,7 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
             copyList.add(tvlocation.text.toString().trim { it <= ' ' })
             copyList.add(tvteacher.text.toString().trim { it <= ' ' })
             copyList.add(setNumberOfWeek())
-            Toast.makeText(activity, "已复制", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity, activity.getString(R.string.toast_copied), Toast.LENGTH_SHORT).show()
         }
         pasteBtn.setOnClickListener {
             if (copyList.size == COPY_SIZE) {
@@ -262,7 +269,7 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
                         materialCheckBox.isChecked = true
                     }
                 }
-                Toast.makeText(activity, "已粘贴", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity, activity.getString(R.string.toast_pasted), Toast.LENGTH_SHORT).show()
             }
         }
         oddBtn.setOnClickListener {
@@ -295,7 +302,7 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
             val view = LayoutInflater.from(activity).inflate(R.layout.view_range, null)
             val seekBar = view.findViewById<RangeSeekBar>(R.id.seekBar)
             val tvFontPreview = view.findViewById<TextView>(R.id.tv_font_preview)
-            tvFontPreview.text = "拖动滑块设置课程周数"
+            tvFontPreview.text = activity.getString(R.string.label_drag_set_weeks)
             seekBar.seekBarMode = RangeSeekBar.SEEKBAR_MODE_RANGE
             seekBar.setRange(1f, 50f)
             seekBar.setValue(12f, 37f)
@@ -305,7 +312,7 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
                 override fun onRangeChanged(view: RangeSeekBar, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
                     l = leftValue.toInt()
                     r = rightValue.toInt()
-                    tvFontPreview.setText("课程从第${l}周到第${r}周")
+                    tvFontPreview.text = activity.getString(R.string.label_course_week_range, l.toString(), r.toString())
                 }
 
                 override fun onStartTrackingTouch(view: RangeSeekBar, isLeft: Boolean) {}
@@ -314,8 +321,8 @@ constructor(@param:NonNull private val activity: Activity, private val classSche
             })
             AlertDialog.Builder(activity)
                     .setView(view)
-                    .setTitle("设置课程周数区间")
-                    .setPositiveButton("确定") { _, _ ->
+                    .setTitle(activity.getString(R.string.dialog_set_week_range))
+                    .setPositiveButton(activity.getString(R.string.dialog_ok)) { _, _ ->
                         if (l != 0 && r != 0) {
                             for (i in l..r) {
                                 val materialCheckBox = autoWrapLineLayout.getChildAt(i - 1) as MaterialCheckBox

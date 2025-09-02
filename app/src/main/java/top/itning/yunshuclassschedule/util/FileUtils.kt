@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.annotation.CheckResult
 import androidx.annotation.NonNull
 import com.tencent.bugly.crashreport.CrashReport
+import top.itning.yunshuclassschedule.R
 import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
@@ -27,7 +28,7 @@ object FileUtils {
         }
         val file = File(context.cacheDir.toString() + File.separator + "cache")
         if (!file.canRead()) {
-            Toast.makeText(context, "读取图片失败:", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.error_read_image_failed), Toast.LENGTH_LONG).show()
             CrashReport.postCatchedException(Throwable("read image failure , file.canRead method return false"))
             return
         }
@@ -40,7 +41,7 @@ object FileUtils {
         Log.d(TAG, "file size :" + fileSizeInKB + "KB")
         if (fileSizeInMB > MAX_IMAGE_FILE_SIZE) {
             Log.d(TAG, "this image too large :" + fileSizeInMB + "MB")
-            Toast.makeText(context, "图片太大了", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.error_image_too_large), Toast.LENGTH_LONG).show()
             return
         }
         try {
@@ -48,7 +49,7 @@ object FileUtils {
         } catch (e: IOException) {
             Log.e(TAG, " ", e)
             CrashReport.postCatchedException(e)
-            Toast.makeText(context, "图片写入失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.error_image_write_failed), Toast.LENGTH_LONG).show()
         }
 
     }
@@ -61,7 +62,7 @@ object FileUtils {
         } catch (e: Exception) {
             Log.e(TAG, " ", e)
             CrashReport.postCatchedException(e)
-            Toast.makeText(context, "写入缓存失败:" + e.message, Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.error_write_cache_failed, e.message), Toast.LENGTH_LONG).show()
             false
         }
     }

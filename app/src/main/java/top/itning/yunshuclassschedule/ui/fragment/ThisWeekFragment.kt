@@ -1,5 +1,6 @@
 package top.itning.yunshuclassschedule.ui.fragment
 
+import android.content.Context
 import android.graphics.Point
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -17,6 +18,7 @@ import kotlinx.android.synthetic.main.fragment_this_week.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
@@ -41,6 +43,10 @@ class ThisWeekFragment : Fragment() {
         Log.d(TAG, "on Create View")
         mView = inflater.inflate(R.layout.fragment_this_week, container, false)
         return mView
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(LocaleHelper.applyAppLocale(context))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -114,7 +120,7 @@ class ThisWeekFragment : Fragment() {
 
                         override fun onLoadFailed(errorDrawable: Drawable?) {
                             Log.d(TAG, "on Load Failed : $errorDrawable")
-                            Toast.makeText(requireContext(), "图片加载失败", Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), getString(R.string.toast_image_load_failed), Toast.LENGTH_LONG).show()
                         }
 
                         override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable>?) {

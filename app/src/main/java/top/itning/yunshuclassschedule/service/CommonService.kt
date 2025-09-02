@@ -17,6 +17,7 @@ import androidx.preference.PreferenceManager
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
 import top.itning.yunshuclassschedule.entity.EventEntity
@@ -62,12 +63,12 @@ class CommonService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             Log.d(TAG, "Build.VERSION.SDK_INT :" + Build.VERSION.SDK_INT + " now create Notification Channel")
 
             var channelId = "class_reminder"
-            var channelName = "课程提醒"
+            var channelName = getString(R.string.channel_class_reminder)
             var importance = NotificationManager.IMPORTANCE_HIGH
             createNotificationChannel(channelId, channelName, importance, true)
 
             channelId = "foreground_service"
-            channelName = "前台服务"
+            channelName = getString(R.string.channel_foreground_service)
             importance = NotificationManager.IMPORTANCE_NONE
             createNotificationChannel(channelId, channelName, importance, false)
         }
@@ -85,7 +86,7 @@ class CommonService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
     override fun onBind(intent: Intent): IBinder? {
-        throw UnsupportedOperationException("Not yet implemented")
+        throw UnsupportedOperationException(getString(R.string.error_not_implemented))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

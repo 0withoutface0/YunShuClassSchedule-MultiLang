@@ -48,7 +48,7 @@ class SettingActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceSta
         val supportActionBar = supportActionBar
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true)
-            supportActionBar.title = "设置"
+            supportActionBar.title = getString(R.string.title_settings)
         }
         val settingsFragment = SettingsFragment()
         supportFragmentManager.beginTransaction()

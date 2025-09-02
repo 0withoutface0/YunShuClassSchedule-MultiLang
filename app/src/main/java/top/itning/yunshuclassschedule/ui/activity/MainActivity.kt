@@ -111,13 +111,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      */
     private fun initView() {
         //设置主标题
-        toolbar.title = ACTION_BAR_TITLE_FORMAT.format(Date())
+        //toolbar.title = ACTION_BAR_TITLE_FORMAT.format(Date())
+        toolbar.title = getActionBarDateFormat().format(Date())
         toolbar.setOnClickListener {
             val now = PreferenceManager.getDefaultSharedPreferences(this).getString(SettingsFragment.NOW_WEEK_NUM, "1")!!
             if (tempNumberOfWeek != now) {
                 tempNumberOfWeek = now
                 EventBus.getDefault().post(EventEntity(ConstantPool.Int.CLASS_WEEK_CHANGE, tempNumberOfWeek))
-                Toast.makeText(this, "回到当前周", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.title_back_to_current_week), Toast.LENGTH_SHORT).show()
             }
         }
         toolbar.setOnLongClickListener {
@@ -126,9 +127,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             appCompatSpinner.adapter = ArrayAdapter(this, android.R.layout.simple_expandable_list_item_1, list.toList())
             appCompatSpinner.setSelection(tempNumberOfWeek.toInt() - 1)
             AlertDialog.Builder(this)
-                    .setTitle("快速跳转到其它周")
+                    .setTitle(getString(R.string.title_jump_to_other_week))
                     .setView(appCompatSpinner)
-                    .setPositiveButton("确定") { _, _ ->
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         if (appCompatSpinner.selectedItem.toString() != tempNumberOfWeek) {
                             tempNumberOfWeek = appCompatSpinner.selectedItem.toString()
                             EventBus.getDefault().post(EventEntity(ConstantPool.Int.CLASS_WEEK_CHANGE, tempNumberOfWeek))
@@ -137,6 +138,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     .show()
             true
         }
+
         //设置导航
         setSupportActionBar(toolbar)
         ThemeChangeUtil.initColor(this, drawer_layout)
@@ -170,6 +172,14 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     }
 
     /**
+     * format time based on local
+     */
+    private fun getActionBarDateFormat(): SimpleDateFormat {
+        val pattern = getString(R.string.date_format_pattern)
+        return SimpleDateFormat(pattern, Locale.getDefault())
+    }
+
+    /**
      * 新用户引导
      */
     private fun newUserStudy() {
@@ -185,7 +195,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             }
         }
         if (toolbarTitle != null) {
-            TapTargetView.showFor(this, TapTarget.forView(toolbarTitle, "长按时间标题可以跳转到其它周，在其它周按一次标题即可回到当前周")
+            TapTargetView.showFor(this, TapTarget.forView(toolbarTitle, getString(R.string.hint_toolbar_long_press))
                     .outerCircleColor(R.color.colorAccent)
                     .targetRadius(80),
                     object : TapTargetView.Listener() {
@@ -252,8 +262,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                         .commitAllowingStateLoss()
             }
         }
-        //设置主标题
-        toolbar.title = ACTION_BAR_TITLE_FORMAT.format(Date())
+        //设置主标题 - toolbar date
+        //toolbar.title = ACTION_BAR_TITLE_FORMAT.format(Date())
+        toolbar.title = getActionBarDateFormat().format(Date())
         super.onStart()
     }
 
@@ -266,7 +277,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 if (System.currentTimeMillis() - firstPressedTime < ConstantPool.Int.EXIT_DELAY.get()) {
                     moveTaskToBack(false)
                 } else {
-                    Toast.makeText(this, "再按一次退出", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.press_again_to_exit), Toast.LENGTH_SHORT).show()
                     firstPressedTime = System.currentTimeMillis()
                 }
             }
@@ -276,9 +287,9 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main, menu)
         menu.findItem(R.id.action_show_teacher_info).title = if (App.sharedPreferences.getBoolean(ConstantPool.Str.TEACHER_INFO_STATUS.get(), false))
-            "隐藏授课教师"
+            getString(R.string.menu_hide_teacher)
         else
-            "显示授课教师"
+            getString(R.string.menu_show_teacher)
         return true
     }
 
@@ -298,10 +309,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
             R.id.action_show_teacher_info -> {
                 if (App.sharedPreferences.getBoolean(ConstantPool.Str.TEACHER_INFO_STATUS.get(), false)) {
                     App.sharedPreferences.edit().putBoolean(ConstantPool.Str.TEACHER_INFO_STATUS.get(), false).apply()
-                    item.title = "显示授课教师"
+                    item.title = getString(R.string.menu_hide_teacher)
                 } else {
                     App.sharedPreferences.edit().putBoolean(ConstantPool.Str.TEACHER_INFO_STATUS.get(), true).apply()
-                    item.title = "隐藏授课教师"
+                    item.title = getString(R.string.menu_show_teacher)
                 }
                 EventBus.getDefault().post(EventEntity(ConstantPool.Int.REFRESH_WEEK_FRAGMENT_DATA))
                 return true
@@ -332,10 +343,10 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
      * 显示弹窗
      */
     private fun showDialogToUser() {
-        AlertDialog.Builder(this).setTitle("需要外置存储权限")
-                .setMessage("请授予外置存储权限,才能够更换背景图片")
+        AlertDialog.Builder(this).setTitle(getString(R.string.perm_storage_title))
+                .setMessage(getString(R.string.perm_storage_message))
                 .setCancelable(false)
-                .setPositiveButton("确定") { _, _ -> ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE) }
+                .setPositiveButton(android.R.string.ok) { _, _ -> ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), REQUEST_CODE) }
                 .show()
     }
 
@@ -352,11 +363,11 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                     startSelectImageActivity()
                 }
             } else {
-                AlertDialog.Builder(this).setTitle("需要外置存储权限")
-                        .setMessage("请授予外置存储权限,才能够更换背景图片")
+                AlertDialog.Builder(this).setTitle(getString(R.string.perm_storage_title))
+                        .setMessage(getString(R.string.perm_storage_message))
                         .setCancelable(false)
-                        .setPositiveButton("确定") { _, _ -> startActivityForResult(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)), SETTING_REQUEST_CODE) }
-                        .setNegativeButton("取消", null)
+                        .setPositiveButton(android.R.string.ok) { _, _ -> startActivityForResult(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS, Uri.fromParts("package", packageName, null)), SETTING_REQUEST_CODE) }
+                        .setNegativeButton(android.R.string.cancel, null)
                         .show()
             }
         }
@@ -410,7 +421,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
                 Log.d(TAG, "the result uri:" + result[0].toString())
                 FileUtils.transferFile(this, result[0], "background_img")
             } else {
-                Toast.makeText(this, "背景图片设置失败", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.bg_image_set_fail), Toast.LENGTH_LONG).show()
                 CrashReport.postCatchedException(Throwable("background image set failure"))
             }
         }
@@ -429,7 +440,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         val view = LayoutInflater.from(this).inflate(R.layout.view_range, null)
         val tvFontPreview = view.findViewById<TextView>(R.id.tv_font_preview)
         val setFont = App.sharedPreferences.getFloat(ConstantPool.Str.WEEK_FONT_SIZE.get(), 12f)
-        tvFontPreview.text = MessageFormat.format("字体大小:{0}", setFont)
+        tvFontPreview.text = getString(R.string.label_font_size, setFont)
         tvFontPreview.textSize = setFont
         val bubbleSeekBar = view.findViewById<RangeSeekBar>(R.id.seekBar)
         bubbleSeekBar.setValue(setFont)
@@ -437,7 +448,7 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         bubbleSeekBar.setOnRangeChangedListener(object : OnRangeChangedListener {
             @Suppress("UsePropertyAccessSyntax")
             override fun onRangeChanged(view: RangeSeekBar, leftValue: Float, rightValue: Float, isFromUser: Boolean) {
-                tvFontPreview.text = MessageFormat.format("字体大小:{0}", leftValue)
+                tvFontPreview.text = getString(R.string.label_font_size, leftValue)
                 tvFontPreview.textSize = leftValue
                 size = leftValue
             }
@@ -452,8 +463,8 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         })
         AlertDialog.Builder(this)
                 .setView(view)
-                .setTitle("更改字体大小")
-                .setPositiveButton("确定", null)
+                .setTitle(getString(R.string.dialog_change_font_size))
+                .setPositiveButton(android.R.string.ok, null)
                 .setOnDismissListener { EventBus.getDefault().post(EventEntity(ConstantPool.Int.REFRESH_WEEK_FRAGMENT_DATA)) }
                 .show()
     }
@@ -501,6 +512,6 @@ class MainActivity : BaseActivity(), NavigationView.OnNavigationItemSelectedList
         private const val REQUEST_CODE_CHOOSE = 101
         private const val REQUEST_CODE = 103
         private const val SETTING_REQUEST_CODE = 104
-        private val ACTION_BAR_TITLE_FORMAT = SimpleDateFormat("MM月dd日 E", Locale.CHINESE)
+        //private val ACTION_BAR_TITLE_FORMAT = SimpleDateFormat("MM月dd日 E", Locale.CHINESE)
     }
 }

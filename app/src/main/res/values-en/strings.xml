@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Yunshu Class Schedule</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_set_text_size">Set font size</string>
+    <string name="login_name">Welcome</string>
+    <string name="login_btn_share">Import Data</string>
+    <string name="action_set_background_image">Change background image</string>
+    <string name="action_show_teacher_info">Show teacher</string>
+    <string name="check_score_input_name">Name</string>
+    <string name="check_score_input_id">Student ID</string>
+    <string name="check_score_checkbox_text">Remember name and student ID</string>
+    <string name="check_score_btn_text">Login</string>
+    <string name="dialog_class_schedule_name">Course name</string>
+    <string name="dialog_class_schedule_location">Location</string>
+    <string name="dialog_class_schedule_teacher">Teacher</string>
+    <string name="dialog_class_schedule_paste">Paste this course</string>
+    <string name="dialog_class_schedule_copy">Copy this course</string>
+    <string name="about_create">Software development: ITNING Shu Lu</string>
+    <string name="about_prototype_design">Prototype design: Shu Lu</string>
+    <string name="about_test">Software testing: Shu Lu</string>
+    <string name="about_translator">Translation: 0withoutface0</string>
+    <string name="about_github">Github: YunShuClassSchedule</string>
+    <string name="about_series">Yun Shu™ Software Series</string>
+    <string name="about_copyrights">© 2018 ITNING.TOP ALL RIGHTS RESERVED</string>
+    <string name="login_btn_custom">Start Using</string>
+    <string name="week_1">Mon</string>
+    <string name="week_2">Tu</string>
+    <string name="week_3">Wed</string>
+    <string name="week_4">Th</string>
+    <string name="week_5">Fr</string>
+    <string name="week_6">Sat</string>
+    <string name="week_7">Sun</string>
+    <string name="drawer_class_schedule">Schedule</string>
+    <string name="drawer_check_score">Check grades</string>
+    <string name="drawer_another">Others</string>
+    <string name="drawer_settings">Settings</string>
+    <string name="drawer_day_night">Night mode</string>
+    <string name="custom_done">Done</string>
+    <string name="share_import_title">Import course data</string>
+    <string name="share_import_file">Import from file</string>
+    <string name="share_export_title">Export course data</string>
+    <string name="share_export_file">Export to file</string>
+    <string name="share_export_share">Share course data</string>
+    <string name="customactivityoncrash_error_activity_error_occurred_explanation">(╥﹏╥)\nAn error has occurred</string>
+    <string name="customactivityoncrash_error_activity_restart_app">Restart App</string>
+    <string name="customactivityoncrash_error_activity_close_app">Close App</string>
+    <string name="customactivityoncrash_error_activity_error_details">Error details</string>
+    <string name="customactivityoncrash_error_activity_error_details_title">Error details</string>
+    <string name="customactivityoncrash_error_activity_error_details_close">Close</string>
+    <string name="customactivityoncrash_error_activity_error_details_copy">Copy error details</string>
+    <string name="customactivityoncrash_error_activity_error_details_copied">Copied</string>
+    <string name="customactivityoncrash_error_activity_error_details_clipboard_label">Error information</string>
+    <string name="action_next_week">Next week</string>
+    <string name="action_last_week">Previous week</string>
+    <string name="dialog_class_schedule_set_week">Set course weeks:</string>
+    <string name="dialog_class_schedule_odd">Set as odd-week course</string>
+    <string name="dialog_class_schedule_double">Set as even-week course</string>
+    <string name="dialog_class_schedule_all">Select all</string>
+    <string name="dialog_class_schedule_clear">Clear selection</string>
+    <string name="dialog_class_schedule_range">Range</string>
+    <string name="widget_today_none_class">No classes today</string>
+
+    <string name="pref_category_courses">Course Settings</string>
+    <string name="pref_default_page">Default course page</string>
+    <string name="pref_choose_default_page">Choose default course page</string>
+    <string name="pref_reset_class_time">Reset class time</string>
+    <string name="pref_reset_class_time_summary">Set start and end times</string>
+    <string name="pref_import_export">Import/Export course data</string>
+    <string name="pref_import_export_summary">Backup or share course data</string>
+    <string name="pref_set_current_week">Set current week</string>
+
+    <string name="pref_category_reminder">Class Reminders and Mute</string>
+    <string name="pref_class_reminder">Class reminders</string>
+    <string name="pref_class_reminder_summary">Set notifications before/after class</string>
+    <string name="pref_class_reminder_up_category">Before class</string>
+    <string name="pref_class_reminder_up_status">Class reminder notification</string>
+    <string name="pref_class_reminder_up_status_on">Reminder enabled</string>
+    <string name="pref_class_reminder_up_status_off">Reminder disabled</string>
+    <string name="pref_class_reminder_up_time">Reminder time</string>
+    <string name="pref_class_reminder_up_time_dialog">Choose when to notify before class</string>
+    <string name="pref_class_reminder_down_category">After class</string>
+    <string name="pref_class_reminder_down_status">After-class reminder</string>
+    <string name="pref_class_reminder_down_status_on">Reminder enabled</string>
+    <string name="pref_class_reminder_down_status_off">Reminder disabled</string>
+    <string name="pref_class_reminder_down_time">Reminder time</string>
+    <string name="pref_class_reminder_down_time_dialog">Choose when to notify after class</string>
+
+    <string name="pref_phone_mute">Auto mute during class</string>
+    <string name="pref_phone_mute_summary">Automatically mute phone during class</string>
+    <string name="pref_phone_mute_category">Phone mute settings</string>
+    <string name="pref_phone_mute_status">Mute phone during class</string>
+    <string name="pref_phone_mute_status_on">Mute enabled</string>
+    <string name="pref_phone_mute_status_off">Mute disabled</string>
+    <string name="pref_phone_mute_before_time">Mute before class</string>
+    <string name="pref_phone_mute_before_time_dialog">Choose when to start mute before class</string>
+    <string name="pref_phone_mute_after_time">Unmute after class</string>
+    <string name="pref_phone_mute_after_time_dialog">Choose when to stop mute after class</string>
+
+    <string name="pref_foreground_service">Persistent notification service</string>
+    <string name="pref_foreground_service_on">Service enabled</string>
+    <string name="pref_foreground_service_off">Service disabled</string>
+
+    <string name="pref_category_personalization">Personalization</string>
+    <string name="pref_theme_color">Theme colors</string>
+    <string name="pref_theme_color_primary">Primary color</string>
+    <string name="pref_theme_color_secondary">Secondary color</string>
+    <string name="pref_theme_color_accent">Accent color</string>
+    <string name="pref_theme_color_progress">Progress bar color</string>
+
+    <string name="pref_category_other">Other</string>
+    <string name="pref_feedback">Feedback</string>
+    <string name="pref_check_update">Check for updates</string>
+    <string name="pref_about">About</string>
+
+    <string name="pref_language">Language</string>
+    <string name="pref_language_summary">Choose the app language</string>
+
+    <!-- Main title/date -->
+    <string name="title_back_to_current_week">Back to current week</string>
+    <string name="title_jump_to_other_week">Jump to another week</string>
+
+    <!-- Menu toggle -->
+    <string name="menu_show_teacher">Show teacher names</string>
+    <string name="menu_hide_teacher">Hide teacher names</string>
+
+    <!-- Exit tip -->
+    <string name="press_again_to_exit">Press again to exit</string>
+
+    <!-- Storage permission -->
+    <string name="perm_storage_title">Storage permission required</string>
+    <string name="perm_storage_message">Grant storage permission to change the background image.</string>
+
+    <!-- Background image -->
+    <string name="bg_image_set_fail">Failed to set background image</string>
+
+    <!-- Font size dialog -->
+    <string name="dialog_change_font_size">Change font size</string>
+    <string name="label_font_size">Font size: %1$.0f</string>
+
+    <!-- Toolbar date patterns -->
+    <string name="date_pattern_zh">MM月dd日 E</string>
+    <string name="date_pattern_default">MMM dd, E</string>
+
+    <string name="date_format_pattern" translatable="true">MMM dd, E</string>
+
+    <!-- Notification channels -->
+    <string name="channel_class_reminder">Class Reminder</string>
+    <string name="channel_foreground_service">Foreground Service</string>
+
+    <!-- Errors -->
+    <string name="error_not_implemented">Not yet implemented</string>
+
+    <string name="notification_class_up_title">Class Reminder</string>
+    <string name="notification_class_up_text">%1$s %2$s</string> <!-- class name + location -->
+
+    <string name="notification_class_down_title">Class Reminder</string>
+    <string name="notification_class_down_text">Class is about to end</string>
+
+    <string name="toast_clear_cache_failed">Failed to clear cache array</string>
+    <string name="toast_init_time_failed">Failed to initialize time data</string>
+
+    <!-- Screens / titles -->
+    <string name="title_about">About</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_share_timetable">Share Timetable</string>
+
+    <!-- CustomActivity -->
+    <string name="title_class_period_setup">Class Period Setup</string>
+    <string name="dialog_set_class_count_title">Set number of classes per day</string>
+    <string name="action_save">Save</string>
+    <string name="row_period_up_fmt">Period %1$s Start</string>
+    <string name="row_period_down_fmt">Period %1$s End</string>
+    <string name="tp_title_prefix_period_fmt">Period %1$s</string>
+    <string name="tp_title_suffix_up">Start</string>
+    <string name="tp_title_suffix_down">End</string>
+
+    <!-- MainActivity (tip for the TapTarget) -->
+    <string name="hint_toolbar_long_press">Long-press the time title to jump to another week. Tap it once while in another week to return to the current week.</string>
+
+    <!-- File pickers / chooser -->
+    <string name="chooser_import_title">Choose a course data file to import</string>
+    <string name="chooser_share_title">Share course data file</string>
+
+    <!-- Common toasts / dialogs -->
+    <string name="toast_no_file_manager">No file manager app found</string>
+    <string name="toast_parse_failed">Parse failed</string>
+    <string name="toast_export_failed">Export failed</string>
+    <string name="toast_export_success">Export successful</string>
+    <string name="toast_import_success">Import successful</string>
+    <string name="toast_write_section_failed">Failed to write class periods, please try again</string>
+    <string name="toast_write_db_failed">Failed to write to database, please try again</string>
+    <string name="dialog_warning">Warning</string>
+    <string name="dialog_import_warning">You are about to import course data, which will clear existing courses. Continue?</string>
+
+    <!-- ShareActivity / LoginActivity file names -->
+    <string name="export_base_filename">YunShuClassSchedule Data</string>
+
+    <string name="export_file_ext">.json</string>
+
+    <string name="toast_parse_max_12_periods">Max 12 classes can be selected. parsing failed</string>
+
+    <string name="toast_generate_data_failed">Failed to generate data</string>
+    <string name="toast_save_course_count_fail">Failed to save course count, please try again.</string>
+
+    <string name="label_week">Week %1$s</string>
+    <string name="label_period">Period %1$s</string>
+    <string name="toast_set_course_weeks">Please set course weeks</string>
+    <string name="error_empty_name">Please enter course name</string>
+    <string name="error_empty_location">Please enter location</string>
+    <string name="error_empty_teacher">Please enter teacher</string>
+    <string name="dialog_ok">OK</string>
+    <string name="dialog_cancel">Cancel</string>
+    <string name="dialog_delete">Delete</string>
+    <string name="dialog_delete_title">Delete Confirmation</string>
+    <string name="dialog_delete_message">Delete course on Week %1$s, Period %2$s?</string>
+    <string name="toast_copied">Copied</string>
+    <string name="toast_pasted">Pasted</string>
+    <string name="label_drag_set_weeks">Drag the slider to set weeks</string>
+    <string name="label_course_week_range">Course from week %1$s to week %2$s</string>
+    <string name="dialog_set_week_range">Set course week range</string>
+    <string name="error_internal_data">Internal data error, please contact developer</string>
+
+    <!-- Tabs -->
+    <string name="tab_today">Today</string>
+    <string name="tab_this_week">This week</string>
+    <string name="tab_week_number">Week %1$s</string>
+
+    <!-- Toasts / errors -->
+    <string name="toast_adapter_not_found">Adapter not found. Try reopening the app to fix this.</string>
+    <string name="toast_image_load_failed">Image failed to load</string>
+
+    <string name="notice_title">Notice</string>
+    <string name="notice_message_disable_service">Disabling background service will make reminders and auto-silent inaccurate. Not recommended!</string>
+    <string name="notice_got_it">Got it</string>
+    <string name="error_invalid_weeknum">Value must be greater than 1 and less than 50</string>
+    <string name="label_weeknum_summary">Week %1$s</string>
+    <string name="toast_grant_dnd_permission">Please grant Do Not Disturb permission</string>
+    <string name="toast_reenable_auto_silent">After granting permission, please re-enable auto-silent</string>
+
+    <string name="notification_reminder_service_running">Reminder service is running</string>
+
+    <string name="error_title">Error</string>
+    <string name="ok">OK</string>
+    <string name="error_time_conflict_same_class">Period %1$s has conflicting start/end times, please check</string>
+    <string name="error_time_conflict_adjacent_class">Period %1$s end time conflicts with Period %2$s start time, please check</string>
+
+    <string name="error_read_image_failed">Failed to read image</string>
+    <string name="error_image_too_large">Image is too large</string>
+    <string name="error_image_write_failed">Failed to write image</string>
+    <string name="error_write_cache_failed">Failed to write cache: %1$s</string>
+
+    <string name="preview_next_class">Next class</string>
+    <string name="preview_course_name">Database Principles and Applications</string>
+    <string name="preview_course_location">A301</string>
+    <string name="preview_course_time_remaining">14 minutes until class</string>
+
+    <string name="no_course_data">No course data</string>
+    <string name="swipe_right_tip">Swipe right to view</string>
+    <string name="long_press_to_add_course">Long press empty space to add course</string>
+    <string name="all_classes_finished">All classes finished today</string>
+    <string name="no_classes_today">No classes today</string>
+    <string name="next_class">Next class</string>
+    <string name="last_class">This is the last class</string>
+    <string name="time_until_class">Starts in %1$d minutes</string>
+    <string name="time_until_end">Ends in %1$d minutes</string>
+
+</resources>

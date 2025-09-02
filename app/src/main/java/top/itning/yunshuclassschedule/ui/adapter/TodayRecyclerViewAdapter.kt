@@ -78,7 +78,7 @@ class TodayRecyclerViewAdapter(
         if (position >= scheduleList.size) {
             scheduleList.forEach { Log.e(TAG, it.toString()) }
             CrashReport.postCatchedException(Throwable("onBindViewHolder scheduleList.size ${scheduleList.size}"))
-            Toast.makeText(context, "内部数据错误,请联系开发者", Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.error_internal_data), Toast.LENGTH_LONG).show()
         }
         val classSchedule = scheduleList[position]
         holder.tvName.text = classSchedule.name

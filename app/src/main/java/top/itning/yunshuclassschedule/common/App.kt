@@ -9,6 +9,7 @@ import android.util.Log
 import com.tencent.bugly.crashreport.CrashReport
 import org.greenrobot.eventbus.EventBus
 import top.itning.yunshuclassschedule.AppActivityIndex
+import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.entity.DaoMaster
 import top.itning.yunshuclassschedule.entity.DaoSession
 import top.itning.yunshuclassschedule.util.GlideApp
@@ -34,6 +35,7 @@ class App : Application() {
         daoSession = DaoMaster(db).newSession()
         sharedPreferences = getSharedPreferences(ConstantPool.Str.SHARED_PREFERENCES_FILENAME.get(), Context.MODE_PRIVATE)
         super.onCreate()
+        LocaleHelper.applyAppLocale(this) // initializes default
     }
 
     override fun onTerminate() {

@@ -53,7 +53,7 @@ class ShareActivity : BaseActivity() {
         val supportActionBar = supportActionBar
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true)
-            supportActionBar.title = "分享课程表"
+            supportActionBar.title = getString(R.string.title_share_timetable)
         }
         val nowThemeColorAccent = ThemeChangeUtil.getNowThemeColorAccent(this)
         tv_import_title.setTextColor(nowThemeColorAccent)
@@ -87,7 +87,8 @@ class ShareActivity : BaseActivity() {
         val dataEntity = DataEntity(application as App)
         val gson = Gson()
         val bytes = gson.toJson(dataEntity).toByteArray()
-        val fileName = cacheDir.toString() + File.separator + "云舒课表课程数据.json"
+        val base = getString(R.string.export_base_filename)
+        val fileName = cacheDir.toString() + File.separator + base + getString(R.string.export_file_ext)
         try {
             FileOutputStream(fileName).use { fileOutputStream ->
                 fileOutputStream.write(bytes, 0, bytes.size)
@@ -95,7 +96,7 @@ class ShareActivity : BaseActivity() {
             }
         } catch (e: IOException) {
             Log.e(TAG, " ", e)
-            Toast.makeText(this, "生成数据失败", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_generate_data_failed), Toast.LENGTH_SHORT).show()
             CrashReport.postCatchedException(e)
         }
 
@@ -105,7 +106,7 @@ class ShareActivity : BaseActivity() {
         share.type = "application/octet-stream"
         share.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         share.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        startActivity(Intent.createChooser(share, "分享课程数据文件"))
+        startActivity(Intent.createChooser(share, getString(R.string.chooser_share_title)))
     }
 
     /**
@@ -115,12 +116,14 @@ class ShareActivity : BaseActivity() {
         val intent = Intent(Intent.ACTION_CREATE_DOCUMENT)
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         intent.type = "*/*"
-        val fileName = "云舒课表课程数据" + SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINESE).format(Date()) + ".json"
-        intent.putExtra(Intent.EXTRA_TITLE, fileName)
+        val base = getString(R.string.export_base_filename)
+        val stamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(Date())
+        val suggested = base + stamp + getString(R.string.export_file_ext)
+        intent.putExtra(Intent.EXTRA_TITLE, suggested)
         try {
             startActivityForResult(intent, WRITE_REQUEST_CODE)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "没有找到文件管理APP", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_no_file_manager), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -133,9 +136,9 @@ class ShareActivity : BaseActivity() {
         intent.type = "*/*"
         intent.addCategory(Intent.CATEGORY_OPENABLE)
         try {
-            startActivityForResult(Intent.createChooser(intent, "选择课程数据文件进行导入"), FILE_SELECT_CODE)
+            startActivityForResult(Intent.createChooser(intent, getString(R.string.chooser_import_title)), FILE_SELECT_CODE)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, "没有找到文件管理APP", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.toast_no_file_manager), Toast.LENGTH_SHORT).show()
         }
 
     }
@@ -163,7 +166,7 @@ class ShareActivity : BaseActivity() {
      */
     private fun doExportFile(data: Intent) {
         val uri = data.data ?: run {
-            Toast.makeText(this, "导出失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.toast_export_failed), Toast.LENGTH_LONG).show()
             return
         }
         Log.d(TAG, "File Uri: $uri")
@@ -173,12 +176,12 @@ class ShareActivity : BaseActivity() {
                 val bytes = Gson().toJson(dataEntity).toByteArray()
                 bufferedOutputStream.write(bytes, 0, bytes.size)
                 bufferedOutputStream.flush()
-                Toast.makeText(this, "导出成功", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.toast_export_success), Toast.LENGTH_LONG).show()
             }
         } catch (e: Exception) {
             Log.e(TAG, " ", e)
             CrashReport.postCatchedException(e)
-            Toast.makeText(this, "导出失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.toast_export_failed), Toast.LENGTH_LONG).show()
         }
 
     }
@@ -190,13 +193,13 @@ class ShareActivity : BaseActivity() {
      */
     private fun doImportFile(data: Intent) {
         val uri = data.data ?: run {
-            Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
             return
         }
         Log.d(TAG, "File Uri: $uri")
         try {
             val openInputStream = contentResolver.openInputStream(uri) ?: run {
-                Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
                 return
             }
             val inputAsString = openInputStream.bufferedReader().use { it.readText() }
@@ -204,13 +207,13 @@ class ShareActivity : BaseActivity() {
             val classScheduleList = dataEntity.classScheduleList
             val timeList = dataEntity.timeList
             if (classScheduleList == null || classScheduleList.isEmpty() || timeList == null || timeList.isEmpty()) {
-                Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
                 return
             }
             val timeListSize = timeList.size
             val classScheduleMaxSection = classScheduleList.map { it.section }.max() ?: 12
             if (timeListSize > 12 || classScheduleMaxSection > 12) {
-                Toast.makeText(this, "最大课程数为12节课，解析失败", Toast.LENGTH_LONG).show()
+                Toast.makeText(this, getString(R.string.toast_parse_max_12_periods), Toast.LENGTH_LONG).show()
                 return
             }
             Log.d(TAG, "classScheduleMaxSection: $classScheduleMaxSection timeListSize: $timeListSize")
@@ -220,15 +223,15 @@ class ShareActivity : BaseActivity() {
                 timeListSize
             }
             AlertDialog.Builder(this)
-                    .setTitle("警告")
-                    .setMessage("即将导入课程数据，这会将原有课程信息清空，确定导入吗？")
-                    .setPositiveButton("确定") { _, _ ->
+                    .setTitle(getString(R.string.dialog_warning))
+                    .setMessage(getString(R.string.dialog_import_warning))
+                    .setPositiveButton(android.R.string.ok) { _, _ ->
                         val timeMap = TreeMap<Int, String>()
                         for ((index, value) in timeList.withIndex()) {
                             timeMap[index + 1] = value
                         }
                         if (!DateUtils.isDataLegitimate(timeMap, this)) {
-                            Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
                             return@setPositiveButton
                         }
                         val edit = App.sharedPreferences.edit()
@@ -238,7 +241,7 @@ class ShareActivity : BaseActivity() {
                         if (edit.commit()) {
                             DateUtils.refreshTimeList()
                         } else {
-                            Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
                             return@setPositiveButton
                         }
                         val classScheduleDao = (application as App).daoSession.classScheduleDao
@@ -250,19 +253,19 @@ class ShareActivity : BaseActivity() {
                                             .putInt(ConstantPool.Str.CLASS_SECTION.get(), section)
                                             .commit()) {
                                 DateUtils.refreshTimeList()
-                                Toast.makeText(this, "导入成功", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, getString(R.string.toast_import_success), Toast.LENGTH_LONG).show()
                             } else {
-                                Toast.makeText(this, "写入课程节数失败,请重试", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, getString(R.string.toast_save_course_count_fail), Toast.LENGTH_LONG).show()
                             }
                         } else {
-                            Toast.makeText(this, "写入数据库失败,请重试", Toast.LENGTH_LONG).show()
+                            Toast.makeText(this, getString(R.string.toast_write_db_failed), Toast.LENGTH_LONG).show()
                         }
                     }
-                    .setNegativeButton("取消", null)
+                    .setNegativeButton(android.R.string.cancel, null)
                     .show()
         } catch (e: Exception) {
             Log.e(TAG, " ", e)
-            Toast.makeText(this, "解析失败", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, getString(R.string.toast_parse_failed), Toast.LENGTH_LONG).show()
         }
     }
 

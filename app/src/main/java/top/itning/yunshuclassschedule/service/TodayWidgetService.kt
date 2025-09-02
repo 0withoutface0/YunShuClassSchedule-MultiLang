@@ -28,7 +28,7 @@ class TodayWidgetService : Service(), SharedPreferences.OnSharedPreferenceChange
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onBind(intent: Intent?): IBinder? {
-        throw UnsupportedOperationException("Not yet implemented")
+        throw UnsupportedOperationException(getString(R.string.error_not_implemented))
     }
 
     override fun onCreate() {

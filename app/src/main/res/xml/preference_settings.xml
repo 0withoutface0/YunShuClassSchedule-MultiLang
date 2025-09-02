@@ -1,186 +1,225 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <PreferenceCategory
-        android:title="课程设置"
+        android:title="@string/pref_category_courses"
         app:iconSpaceReserved="false">
+
         <ListPreference
             android:defaultValue="today"
-            android:dialogTitle="选择默认展示课程页面"
+            android:dialogTitle="@string/pref_choose_default_page"
             android:entries="@array/entries_list_default_show_main_fragment"
             android:entryValues="@array/entries_values_default_show_main_fragment"
             android:key="default_show_main_fragment"
-            android:title="默认展示课程页面"
+            android:title="@string/pref_default_page"
             app:iconSpaceReserved="false" />
+
         <Preference
-            android:summary="设置上下课时间"
-            android:title="重新设置课时"
+            android:summary="@string/pref_reset_class_time_summary"
+            android:title="@string/pref_reset_class_time"
             app:iconSpaceReserved="false">
             <intent android:action="top.itning.yunshuclassschedule.CUSTOM" />
         </Preference>
+
         <Preference
-            android:summary="备份或者分享课程数据"
-            android:title="导入导出课程数据"
+            android:summary="@string/pref_import_export_summary"
+            android:title="@string/pref_import_export"
             app:iconSpaceReserved="false">
             <intent android:action="top.itning.yunshuclassschedule.SHARE" />
         </Preference>
+
         <EditTextPreference
             android:key="now_week_num"
-            android:title="设置当前周数"
+            android:title="@string/pref_set_current_week"
             android:dialogLayout="@layout/preference_dialog_layout"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
+
     <PreferenceCategory
-        android:title="上下课提醒与静音"
+        android:title="@string/pref_category_reminder"
         app:iconSpaceReserved="false">
+
         <PreferenceScreen
             android:key="class_reminder"
             android:persistent="false"
-            android:summary="设置上下课提前提醒通知"
-            android:title="上下课提醒"
+            android:summary="@string/pref_class_reminder_summary"
+            android:title="@string/pref_class_reminder"
             app:iconSpaceReserved="false">
+
             <PreferenceCategory
-                android:title="上课提醒"
+                android:title="@string/pref_class_reminder_up_category"
                 app:iconSpaceReserved="false">
+
                 <SwitchPreference
                     android:defaultValue="true"
                     android:key="class_reminder_up_status"
-                    android:summaryOff="上课提醒通知已关闭"
-                    android:summaryOn="上课提醒通知已开启"
-                    android:title="上课提醒通知"
+                    android:summaryOff="@string/pref_class_reminder_up_status_off"
+                    android:summaryOn="@string/pref_class_reminder_up_status_on"
+                    android:title="@string/pref_class_reminder_up_status"
                     app:iconSpaceReserved="false" />
+
                 <ListPreference
                     android:defaultValue="3"
                     android:dependency="class_reminder_up_status"
-                    android:dialogTitle="选择上课提醒通知发出时间"
+                    android:dialogTitle="@string/pref_class_reminder_up_time_dialog"
                     android:entries="@array/entries_list_class_reminder_up_time"
                     android:entryValues="@array/entries_values_class_reminder_up_time"
                     android:key="class_reminder_up_time"
-                    android:title="提醒时间设置"
+                    android:title="@string/pref_class_reminder_up_time"
                     app:iconSpaceReserved="false" />
             </PreferenceCategory>
+
             <PreferenceCategory
-                android:title="下课提醒"
+                android:title="@string/pref_class_reminder_down_category"
                 app:iconSpaceReserved="false">
+
                 <SwitchPreference
                     android:defaultValue="true"
                     android:key="class_reminder_down_status"
-                    android:summaryOff="下课提醒通知已关闭"
-                    android:summaryOn="下课提醒通知已开启"
-                    android:title="下课提醒通知"
+                    android:summaryOff="@string/pref_class_reminder_down_status_off"
+                    android:summaryOn="@string/pref_class_reminder_down_status_on"
+                    android:title="@string/pref_class_reminder_down_status"
                     app:iconSpaceReserved="false" />
+
                 <ListPreference
                     android:defaultValue="1"
                     android:dependency="class_reminder_down_status"
-                    android:dialogTitle="选择下课提醒通知发出时间"
+                    android:dialogTitle="@string/pref_class_reminder_down_time_dialog"
                     android:entries="@array/entries_list_class_reminder_down_time"
                     android:entryValues="@array/entries_values_class_reminder_down_time"
                     android:key="class_reminder_down_time"
-                    android:title="提醒时间设置"
+                    android:title="@string/pref_class_reminder_down_time"
                     app:iconSpaceReserved="false" />
             </PreferenceCategory>
         </PreferenceScreen>
+
         <PreferenceScreen
             android:key="phone_mute"
             android:persistent="false"
-            android:summary="设置上课手机自动静音"
-            android:title="上课时手机自动静音"
+            android:summary="@string/pref_phone_mute_summary"
+            android:title="@string/pref_phone_mute"
             app:iconSpaceReserved="false">
+
             <PreferenceCategory
-                android:title="手机自动静音设置"
+                android:title="@string/pref_phone_mute_category"
                 app:iconSpaceReserved="false">
+
                 <SwitchPreference
                     android:defaultValue="false"
                     android:key="phone_mute_status"
-                    android:summaryOff="上课手机自动静音已关闭"
-                    android:summaryOn="上课手机自动静音已开启"
-                    android:title="上课手机自动静音"
+                    android:summaryOff="@string/pref_phone_mute_status_off"
+                    android:summaryOn="@string/pref_phone_mute_status_on"
+                    android:title="@string/pref_phone_mute_status"
                     app:iconSpaceReserved="false" />
+
                 <ListPreference
                     android:defaultValue="0"
                     android:dependency="phone_mute_status"
-                    android:dialogTitle="选择上课开启静音时间"
+                    android:dialogTitle="@string/pref_phone_mute_before_time_dialog"
                     android:entries="@array/entries_list_phone_mute_before_time"
                     android:entryValues="@array/entries_values_phone_mute_before_time"
                     android:key="phone_mute_before_time"
-                    android:title="上课前静音时间设置"
+                    android:title="@string/pref_phone_mute_before_time"
                     app:iconSpaceReserved="false" />
+
                 <ListPreference
                     android:defaultValue="0"
                     android:dependency="phone_mute_status"
-                    android:dialogTitle="选择下课解除静音时间"
+                    android:dialogTitle="@string/pref_phone_mute_after_time_dialog"
                     android:entries="@array/entries_list_phone_mute_after_time"
                     android:entryValues="@array/entries_values_phone_mute_after_time"
                     android:key="phone_mute_after_time"
-                    android:title="下课前解除静音时间设置"
+                    android:title="@string/pref_phone_mute_after_time"
                     app:iconSpaceReserved="false" />
             </PreferenceCategory>
         </PreferenceScreen>
+
         <SwitchPreference
             android:defaultValue="true"
             android:key="foreground_service_status"
-            android:summaryOff="通知栏服务常驻已关闭"
-            android:summaryOn="通知栏服务常驻已开启"
-            android:title="提醒服务后台常驻"
+            android:summaryOff="@string/pref_foreground_service_off"
+            android:summaryOn="@string/pref_foreground_service_on"
+            android:title="@string/pref_foreground_service"
             app:iconSpaceReserved="false" />
     </PreferenceCategory>
+
     <PreferenceCategory
-        android:title="个性化设置"
+        android:title="@string/pref_category_personalization"
         app:iconSpaceReserved="false">
+
         <PreferenceScreen
             android:key="theme_color"
             android:persistent="false"
-            android:summary="设置应用主题"
-            android:title="主题颜色"
+            android:summary="@string/pref_theme_color"
+            android:title="@string/pref_theme_color"
             app:iconSpaceReserved="false">
+
             <PreferenceCategory
-                android:title="主题颜色"
+                android:title="@string/pref_theme_color"
                 app:iconSpaceReserved="false">
+
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
                     android:defaultValue="@color/colorPrimary"
                     android:key="app_color_primary"
-                    android:title="主色调"
+                    android:title="@string/pref_theme_color_primary"
                     app:colorChoices="@array/color_choices"
                     app:iconSpaceReserved="false" />
+
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
                     android:defaultValue="@color/colorPrimaryDark"
                     android:key="app_color_primary_dark"
-                    android:title="次色调"
+                    android:title="@string/pref_theme_color_secondary"
                     app:colorChoices="@array/color_choices_700"
                     app:iconSpaceReserved="false" />
+
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
                     android:defaultValue="@color/colorAccent"
                     android:key="app_color_accent"
-                    android:title="强调色"
+                    android:title="@string/pref_theme_color_accent"
                     app:colorChoices="@array/color_choices_200"
                     app:iconSpaceReserved="false" />
+
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
                     android:defaultValue="@color/color_progress"
                     android:key="app_color_progress"
-                    android:title="进度条颜色"
+                    android:title="@string/pref_theme_color_progress"
                     app:colorChoices="@array/color_choices_progress"
                     app:iconSpaceReserved="false" />
             </PreferenceCategory>
+
         </PreferenceScreen>
+		<ListPreference
+			android:key="app_language"
+			android:title="@string/pref_language"
+			android:summary="@string/pref_language_summary"
+			android:entries="@array/entries_list_language"
+			android:entryValues="@array/entries_values_language"
+			android:defaultValue="system"
+			app:iconSpaceReserved="false" />
     </PreferenceCategory>
+
     <PreferenceCategory
-        android:title="其它"
+        android:title="@string/pref_category_other"
         app:iconSpaceReserved="false">
+
         <Preference
-            android:title="反馈建议"
+            android:title="@string/pref_feedback"
             app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="mqqopensdkapi://bizAgent/qm/qr?url=http%3A%2F%2Fqm.qq.com%2Fcgi-bin%2Fqm%2Fqr%3Ffrom%3Dapp%26p%3Dandroid%26k%3DdGYRU1ThLpA88YH7vMJv-ANUl2SY31HO" />
         </Preference>
+
         <Preference
-            android:title="检查更新"
+            android:title="@string/pref_check_update"
             app:iconSpaceReserved="false">
             <intent
                 android:action="android.intent.action.VIEW"
                 android:data="https://www.coolapk.com/apk/top.itning.yunshuclassschedule" />
         </Preference>
+
         <Preference
-            android:title="关于"
+            android:title="@string/pref_about"
             app:iconSpaceReserved="false">
             <intent android:action="top.itning.yunshuclassschedule.ABOUT" />
         </Preference>
