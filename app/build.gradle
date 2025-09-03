@@ -23,6 +23,9 @@ android {
         }
         resConfigs "zh", "en"
     }
+    buildFeatures {
+        viewBinding true
+    }
     buildTypes {
         release {
             // 混淆
