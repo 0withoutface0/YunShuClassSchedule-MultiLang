@@ -14,6 +14,9 @@ import top.itning.yunshuclassschedule.LocaleHelper
 import top.itning.yunshuclassschedule.entity.DaoMaster
 import top.itning.yunshuclassschedule.entity.DaoSession
 import top.itning.yunshuclassschedule.util.GlideApp
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.os.Build
 
 /**
  * 应用基类
@@ -28,6 +31,7 @@ class App : Application() {
         super.onCreate()
         //Material You dynamic colors
         DynamicColors.applyToActivitiesIfAvailable(this)
+        createNotificationChannels()
         // 程序创建的时候执行
         //EventBus add Index
         EventBus.builder().addIndex(AppActivityIndex()).installDefaultEventBus()
@@ -39,6 +43,36 @@ class App : Application() {
         daoSession = DaoMaster(db).newSession()
         sharedPreferences = getSharedPreferences(ConstantPool.Str.SHARED_PREFERENCES_FILENAME.get(), Context.MODE_PRIVATE)
         LocaleHelper.applyAppLocale(this) // initializes default
+    }
+
+    private fun createNotificationChannels() {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+        val nm = getSystemService(NotificationManager::class.java)
+
+        // Matches RemindService.sendNotification("class_reminder")
+        nm.createNotificationChannel(
+            NotificationChannel(
+                "class_reminder",
+                "Class reminders",
+                NotificationManager.IMPORTANCE_HIGH
+            ).apply {
+                description = "Notifications before/after classes"
+                enableVibration(true)
+                setShowBadge(true)
+            }
+        )
+
+        // Matches your foreground service builder channel id
+        nm.createNotificationChannel(
+            NotificationChannel(
+                "foreground",
+                "Background service",
+                NotificationManager.IMPORTANCE_MIN
+            ).apply {
+                description = "Ongoing service notification"
+                setShowBadge(false)
+            }
+        )
     }
 
     override fun onTerminate() {
