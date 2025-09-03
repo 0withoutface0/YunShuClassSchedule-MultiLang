@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <paths>
-    <external-path
-        name="external"
-        path="." />
-    <cache-path
-        name="cache"
-        path="." />
+    <!-- App-scoped external storage (Pictures/Documents inside Android/data/<pkg>/files/...) -->
+    <external-files-path name="external_files" path="." />
+    <!-- App cache -->
+    <cache-path name="cache" path="." />
 </paths>

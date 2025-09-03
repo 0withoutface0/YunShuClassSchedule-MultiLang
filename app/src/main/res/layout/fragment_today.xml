@@ -15,7 +15,7 @@
             android:id="@+id/ll"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:background="@color/colorPrimary">
+            android:background="?attr/colorSurface">
 
 
             <RelativeLayout
@@ -33,7 +33,7 @@
                     android:layout_above="@id/tv_remind_name"
                     android:layout_centerHorizontal="true"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="20sp"
                     app:autoSizeTextType="uniform"
                     tools:ignore="MissingPrefix"
@@ -46,7 +46,7 @@
                     android:layout_above="@id/tv_remind_location"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="30sp"
                     app:autoSizeTextType="uniform"
                     tools:ignore="MissingPrefix"
@@ -60,7 +60,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="35sp"
                     app:autoSizeTextType="uniform"
                     tools:ignore="MissingPrefix"
@@ -73,7 +73,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:textColor="@android:color/white"
+                    android:textColor="?attr/colorOnSurface"
                     android:textSize="80sp"
                     app:autoSizeTextType="uniform"
                     tools:ignore="MissingPrefix"

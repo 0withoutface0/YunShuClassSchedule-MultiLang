@@ -158,29 +158,30 @@
                 android:title="@string/pref_theme_color"
                 app:iconSpaceReserved="false">
 
+                <!-- Use concrete color resources, NOT @color/colorPrimary alias -->
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
-                    android:defaultValue="@color/colorPrimary"
+                    android:defaultValue="@color/md_theme_light_primary"
                     android:key="app_color_primary"
                     android:title="@string/pref_theme_color_primary"
                     app:colorChoices="@array/color_choices"
                     app:iconSpaceReserved="false" />
 
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
-                    android:defaultValue="@color/colorPrimaryDark"
+                    android:defaultValue="@color/md_theme_light_primary"
                     android:key="app_color_primary_dark"
                     android:title="@string/pref_theme_color_secondary"
                     app:colorChoices="@array/color_choices_700"
                     app:iconSpaceReserved="false" />
 
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
-                    android:defaultValue="@color/colorAccent"
+                    android:defaultValue="@color/md_theme_light_secondary"
                     android:key="app_color_accent"
                     android:title="@string/pref_theme_color_accent"
                     app:colorChoices="@array/color_choices_200"
                     app:iconSpaceReserved="false" />
 
                 <com.kizitonwose.colorpreferencecompat.ColorPreferenceCompat
-                    android:defaultValue="@color/color_progress"
+                    android:defaultValue="@color/md_theme_light_secondary"
                     android:key="app_color_progress"
                     android:title="@string/pref_theme_color_progress"
                     app:colorChoices="@array/color_choices_progress"
@@ -188,14 +189,15 @@
             </PreferenceCategory>
 
         </PreferenceScreen>
-		<ListPreference
-			android:key="app_language"
-			android:title="@string/pref_language"
-			android:summary="@string/pref_language_summary"
-			android:entries="@array/entries_list_language"
-			android:entryValues="@array/entries_values_language"
-			android:defaultValue="system"
-			app:iconSpaceReserved="false" />
+
+        <ListPreference
+            android:key="app_language"
+            android:title="@string/pref_language"
+            android:summary="@string/pref_language_summary"
+            android:entries="@array/entries_list_language"
+            android:entryValues="@array/entries_values_language"
+            android:defaultValue="system"
+            app:iconSpaceReserved="false" />
     </PreferenceCategory>
 
     <PreferenceCategory

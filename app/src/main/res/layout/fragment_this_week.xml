@@ -14,7 +14,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_1"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="1"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -23,7 +23,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_2"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="2"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -32,7 +32,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_3"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="3"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -41,7 +41,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_4"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="4"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_5"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="5"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -59,7 +59,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_6"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="6"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"
@@ -68,7 +68,7 @@
         <TextView
             android:layout_margin="2dp"
             android:text="@string/week_7"
-            android:textColor="@android:color/tertiary_text_dark"
+            android:textColor="?attr/colorOnSurface"
             app:layout_column="7"
             app:layout_columnWeight="1"
             app:layout_gravity="fill"

@@ -1,8 +1,13 @@
 <network-security-config>
-    <base-config cleartextTrafficPermitted="true">
+    <base-config cleartextTrafficPermitted="false">
         <trust-anchors>
-            <certificates src="system" overridePins="true" />
-            <certificates src="user" overridePins="true" />
+            <certificates src="system"/>
         </trust-anchors>
     </base-config>
+
+    <!-- Allow http only for specific debug hosts -->
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">10.0.2.2</domain>
+        <domain includeSubdomains="true">192.168.0.0</domain>
+    </domain-config>
 </network-security-config>

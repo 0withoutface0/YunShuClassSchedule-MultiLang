@@ -5,7 +5,6 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import android.widget.TextView
 import androidx.annotation.CheckResult
 import androidx.annotation.ColorInt
@@ -13,18 +12,14 @@ import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
-import androidx.preference.PreferenceManager
 import com.google.android.material.tabs.TabLayout
-import com.jaeger.library.StatusBarUtil
 import org.greenrobot.eventbus.EventBus
 import top.itning.yunshuclassschedule.R
 import top.itning.yunshuclassschedule.common.App
 import top.itning.yunshuclassschedule.common.ConstantPool
 import top.itning.yunshuclassschedule.entity.EventEntity
-import top.itning.yunshuclassschedule.ui.fragment.setting.SettingsFragment.Companion.APP_COLOR_ACCENT
-import top.itning.yunshuclassschedule.ui.fragment.setting.SettingsFragment.Companion.APP_COLOR_PRIMARY
-import top.itning.yunshuclassschedule.ui.fragment.setting.SettingsFragment.Companion.APP_COLOR_PRIMARY_DARK
-import top.itning.yunshuclassschedule.ui.fragment.setting.SettingsFragment.Companion.APP_COLOR_PROGRESS
+import com.google.android.material.color.MaterialColors
+import com.google.android.material.R as M3
 
 /**
  * 主题更换工具类
@@ -68,34 +63,30 @@ object ThemeChangeUtil {
      * @param activity     [AppCompatActivity]
      * @param drawerLayout [DrawerLayout]
      */
-    fun initColor(@NonNull activity: AppCompatActivity, drawerLayout: DrawerLayout) {
-        if (!isChange) {
-            val supportActionBar = activity.supportActionBar
-            val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity.applicationContext)
-            if (supportActionBar != null) {
-                val appColorPrimary = sharedPreferences.getInt(APP_COLOR_PRIMARY, defaultColorPrimary)
-                supportActionBar.setBackgroundDrawable(ColorDrawable(appColorPrimary))
-            }
-            val appColorPrimaryDark = sharedPreferences.getInt(APP_COLOR_PRIMARY_DARK, defaultColorPrimaryDark)
-            StatusBarUtil.setColorForDrawerLayout(activity, drawerLayout, appColorPrimaryDark, 10)
-        }
+    fun initColor(activity: AppCompatActivity, drawerLayout: DrawerLayout) {
+        // Let the theme (Monet) drive colors. If you still want a tinted bar, derive from roles:
+        val primary = MaterialColors.getColor(activity, M3.attr.colorPrimary, 0)
+        activity.supportActionBar?.setBackgroundDrawable(ColorDrawable(primary))
+
+        // Optional: if you want a tinted status bar for the drawer screen:
+        // val surface = MaterialColors.getColor(activity, M3.attr.colorSurface, 0)
+        // StatusBarUtil.setColorForDrawerLayout(activity, drawerLayout, surface, 10)
     }
+
 
     /**
      * 更新主Activity主题
      *
      * @param activity [AppCompatActivity]
      */
-    fun changeMainActivityTheme(@NonNull activity: AppCompatActivity) {
-        initDefaultColor(activity)
-        if (isChange) {
-            activity.setTheme(R.style.AppTheme_NightTheme)
-            val window = activity.window
-            //设置状态栏透明
-            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-            window.navigationBarColor = ContextCompat.getColor(activity, R.color.nightThemeColorPrimary)
-        }
+    fun changeMainActivityTheme(activity: AppCompatActivity) {
+        // Do not swap to custom themes; let DayNight + dynamic color handle it.
+        // If you still want a colored ActionBar, derive it from the current theme:
+        val primary = MaterialColors.getColor(activity, M3.attr.colorPrimary, 0)
+        activity.supportActionBar?.setBackgroundDrawable(ColorDrawable(primary))
+        // Avoid forcing transparent/status flags here; keep window managed by the theme.
     }
+
 
     /**
      * 简单设置主题
@@ -103,9 +94,10 @@ object ThemeChangeUtil {
      * @param activity [AppCompatActivity]
      */
     fun simpleSetTheme(@NonNull activity: AppCompatActivity) {
-        if (isChange) {
-            activity.setTheme(R.style.AppTheme_NightTheme_Setting)
-        }
+        //might need it for API compatibility
+        //if (isChange) {
+        //    activity.setTheme(R.style.AppTheme_NightTheme_Setting)
+        //}
     }
 
     /**
@@ -128,21 +120,16 @@ object ThemeChangeUtil {
      *
      * @param activity [AppCompatActivity]
      */
-    fun changeTheme(@NonNull activity: AppCompatActivity) {
-        initDefaultColor(activity)
-        if (isChange) {
-            activity.setTheme(R.style.AppTheme_NightTheme_Setting)
-            return
-        }
-        val actionBar = activity.supportActionBar
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(activity.applicationContext)
-        if (actionBar != null) {
-            val appColorPrimary = sharedPreferences.getInt(APP_COLOR_PRIMARY, defaultColorPrimary)
-            actionBar.setBackgroundDrawable(ColorDrawable(appColorPrimary))
-        }
-        val appColorPrimaryDark = sharedPreferences.getInt(APP_COLOR_PRIMARY_DARK, defaultColorPrimaryDark)
-        StatusBarUtil.setColor(activity, appColorPrimaryDark, 30)
+    fun changeTheme(activity: AppCompatActivity) {
+        // Keep a consistent ActionBar that follows Monet
+        val primary = MaterialColors.getColor(activity, M3.attr.colorPrimary, 0)
+        activity.supportActionBar?.setBackgroundDrawable(ColorDrawable(primary))
+
+        // Optional: if you still want to tint the status bar slightly:
+        // val surface = MaterialColors.getColor(activity, M3.attr.colorSurface, 0)
+        // StatusBarUtil.setColor(activity, surface, 30)
     }
+
 
     /**
      * 设置TabLayout颜色
@@ -150,21 +137,14 @@ object ThemeChangeUtil {
      * @param context   [Context]
      * @param tabLayout [TabLayout]
      */
-    fun setTabLayoutColor(@NonNull context: Context, @NonNull tabLayout: TabLayout) {
-        val colorNormal = ContextCompat.getColor(context, android.R.color.white)
-        if (isChange) {
-            val colorAccent = ContextCompat.getColor(context, R.color.nightThemeColorAccent)
-            tabLayout.setBackgroundResource(R.color.nightThemeColorPrimary)
-            tabLayout.setSelectedTabIndicatorColor(colorAccent)
-            tabLayout.setTabTextColors(colorNormal, colorAccent)
-            return
-        }
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val appColorPrimary = sharedPreferences.getInt(APP_COLOR_PRIMARY, defaultColorPrimary)
-        val appColorAccent = sharedPreferences.getInt(APP_COLOR_ACCENT, defaultColorAccent)
-        tabLayout.setBackgroundColor(appColorPrimary)
-        tabLayout.setSelectedTabIndicatorColor(appColorAccent)
-        tabLayout.setTabTextColors(colorNormal, appColorAccent)
+    fun setTabLayoutColor(context: Context, tabLayout: TabLayout) {
+        val primary = MaterialColors.getColor(context, M3.attr.colorPrimary, 0)
+        val onSurface = MaterialColors.getColor(context, M3.attr.colorOnSurface, 0)
+        val surface = MaterialColors.getColor(context, M3.attr.colorSurface, 0)
+
+        tabLayout.setBackgroundColor(surface)
+        tabLayout.setSelectedTabIndicatorColor(primary)
+        tabLayout.setTabTextColors(onSurface, primary)
     }
 
     /**
@@ -173,22 +153,14 @@ object ThemeChangeUtil {
      * @param context [Context]
      * @param views   [View]
      */
-    fun setBackgroundResources(@NonNull context: Context, @NonNull vararg views: View) {
-        if (isChange) {
-            for (v in views) {
-                v.setBackgroundResource(R.color.nightThemeColorPrimary)
-            }
-            return
-        }
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val appColorPrimary = sharedPreferences.getInt(APP_COLOR_PRIMARY, defaultColorPrimary)
+    fun setBackgroundResources(context: Context, vararg views: View) {
+        val surface = MaterialColors.getColor(context, M3.attr.colorSurface, 0)
         for (v in views) {
-            if (v.id == R.id.view_center || v.id == R.id.view_top || v.id == R.id.view_bottom) {
-                continue
-            }
-            v.setBackgroundColor(appColorPrimary)
+            if (v.id == R.id.view_center || v.id == R.id.view_top || v.id == R.id.view_bottom) continue
+            v.setBackgroundColor(surface)
         }
     }
+
 
     /**
      * 设置进度条颜色
@@ -196,15 +168,12 @@ object ThemeChangeUtil {
      * @param context [Context]
      * @param view    [View]
      */
-    fun setProgressBackgroundResource(@NonNull context: Context, @NonNull view: View) {
-        if (isChange) {
-            view.setBackgroundResource(R.color.color_progress_night)
-            return
-        }
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
-        val appColorProgress = sharedPreferences.getInt(APP_COLOR_PROGRESS, defaultColorProgress)
-        view.setBackgroundColor(appColorProgress)
+    // 1) Progress background should come from the theme, not prefs
+    fun setProgressBackgroundResource(context: Context, view: View) {
+        val primary = MaterialColors.getColor(context, M3.attr.colorPrimary, 0)
+        view.setBackgroundColor(primary)
     }
+
 
     /**
      * 获取当前强调色颜色
@@ -212,15 +181,14 @@ object ThemeChangeUtil {
      * @param context [Context]
      * @return 颜色数值
      */
+    // 2) Accent = secondary role from the current theme (Monet on 12+)
     @CheckResult
     @ColorInt
-    fun getNowThemeColorAccent(@NonNull context: Context): Int {
-        return if (isChange) {
-            ContextCompat.getColor(context, R.color.nightThemeColorAccent)
-        } else {
-            PreferenceManager.getDefaultSharedPreferences(context).getInt(APP_COLOR_ACCENT, defaultColorAccent)
-        }
+    fun getNowThemeColorAccent(context: Context): Int {
+        return MaterialColors.getColor(context, M3.attr.colorSecondary, 0)
     }
+
+
 
     /**
      * 设置TextView 颜色
@@ -228,16 +196,9 @@ object ThemeChangeUtil {
      * @param context   [Context]
      * @param textViews [TextView]
      */
-    fun setTextViewsColorByTheme(@NonNull context: Context, @NonNull vararg textViews: TextView) {
-        val isChange = isChange
-        val whiteColor = ContextCompat.getColor(context, android.R.color.white)
-        val blackColor = ContextCompat.getColor(context, android.R.color.black)
-        for (textView in textViews) {
-            if (isChange) {
-                textView.setTextColor(whiteColor)
-            } else {
-                textView.setTextColor(blackColor)
-            }
-        }
+    fun setTextViewsColorByTheme(context: Context, vararg textViews: TextView) {
+        val onSurface = MaterialColors.getColor(context, M3.attr.colorOnSurface, 0)
+        for (tv in textViews) tv.setTextColor(onSurface)
     }
+
 }

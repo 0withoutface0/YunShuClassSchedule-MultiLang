@@ -45,13 +45,24 @@
     <color name="md_theme_light_scrim">#000000</color>
 
     <!-- Legacy aliases used by ThemeChangeUtil (light) -->
-    <color name="nightThemeColorPrimary">@color/md_theme_light_primary</color>
-    <color name="nightThemeColorAccent">@color/md_theme_light_secondary</color>
+    <color name="nightThemeColorPrimary">?attr/colorPrimary</color>
+    <color name="nightThemeColorAccent">?attr/colorSecondary</color>
+    <color name="colorPrimaryDark">?attr/colorPrimary</color>
 
-    <!-- Legacy M2-style names some code still reads -->
-    <color name="colorPrimary">@color/md_theme_light_primary</color>
-    <color name="colorPrimaryDark">@color/md_theme_light_primary</color>
+    <color name="seekbar_progress_light">#0061A4</color> <!-- match md_theme_light_primary -->
+    <!-- RangeSeekBar concrete colors (LIGHT) -->
+    <color name="seekbar_progress">@color/md_theme_light_primary</color>
+    <color name="seekbar_progress_default">@color/md_theme_light_surfaceVariant</color>
+    <color name="seekbar_indicator_bg">@color/md_theme_light_surfaceVariant</color>
+    <color name="seekbar_indicator_text">@color/md_theme_light_onSurface</color>
+    <color name="seekbar_thumb">@color/md_theme_light_primary</color>
+
+    <!-- replace the alias -->
+    <!-- <color name="colorAccent">?attr/colorSecondary</color> -->
     <color name="colorAccent">@color/md_theme_light_secondary</color>
 
+    <!-- (optional but recommended for older libs) -->
+    <!-- <color name="colorPrimary">?attr/colorPrimary</color> -->
+    <color name="colorPrimary">@color/md_theme_light_primary</color>
 
 </resources>
