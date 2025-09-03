@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="top.itning.yunshuclassschedule">
 
+    <!-- Permissions: these are as you had them; see notes below about storage on Android 13+ -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -15,10 +16,17 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <!-- Required on Android 14+ when using android:foregroundServiceType="dataSync" -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+
 
     <uses-permission
         android:name="android.permission.READ_LOGS"
         tools:ignore="ProtectedPermissions" />
+
+
+
 
     <uses-feature
         android:name="android.hardware.location"
@@ -44,74 +52,87 @@
         android:screenOrientation="portrait"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
+
+        <!-- Launcher activity MUST be exported -->
         <activity
             android:name=".ui.activity.SplashActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.FullScreen">
+            android:theme="@style/AppTheme.FullScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Looks internal -> not exported (flip to true if other apps should start it) -->
         <activity
             android:name=".ui.activity.LoginActivity"
             android:label="@string/login_name"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:exported="false">
             <intent-filter>
                 <action android:name="top.itning.yunshuclassschedule.LOGIN" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.SettingActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".ui.activity.AboutActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="false">
             <intent-filter>
                 <action android:name="top.itning.yunshuclassschedule.ABOUT" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.CustomActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="false">
             <intent-filter>
                 <action android:name="top.itning.yunshuclassschedule.CUSTOM" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".ui.activity.ShareActivity"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:exported="false">
             <intent-filter>
                 <action android:name="top.itning.yunshuclassschedule.SHARE" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
+        <!-- Services (no intent-filters): exported may be omitted, but keeping false is fine -->
         <service
             android:name=".service.CommonService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.RemindService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.CourseInfoService"
             android:enabled="true"
-            android:exported="false" />
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
         <service
             android:name=".service.JobSchedulerService"
             android:enabled="true"
@@ -125,10 +146,18 @@
         <service
             android:name=".service.TodayWidgetService"
             android:enabled="true"
+            android:exported="false"
+            android:foregroundServiceType="dataSync" />
+
+        <!-- Receiver without intent-filter didn't need exported; making it explicit -->
+        <receiver
+            android:name=".receiver.RemindReceiver"
             android:exported="false" />
 
-        <receiver android:name=".receiver.RemindReceiver" />
-        <receiver android:name=".ui.widget.TodayWidgetProvider">
+        <!-- App widget provider needs to be reachable by the system -->
+        <receiver
+            android:name=".ui.widget.TodayWidgetProvider"
+            android:exported="true">
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_provider_today_4_2" />
@@ -147,5 +176,4 @@
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
-
 </manifest>

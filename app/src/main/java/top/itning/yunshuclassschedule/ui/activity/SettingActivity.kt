@@ -96,9 +96,9 @@ class SettingActivity : BaseActivity(), PreferenceFragmentCompat.OnPreferenceSta
         return true
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == FOREGROUND_SERVICE_STATUS) {
-            if (sharedPreferences.getBoolean(FOREGROUND_SERVICE_STATUS, true)) {
+            if (sharedPreferences?.getBoolean(FOREGROUND_SERVICE_STATUS, true) == true) {
                 startService(Intent(this, CourseInfoService::class.java))
             }
         }

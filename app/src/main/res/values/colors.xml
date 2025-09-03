@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
-    <color name="nightThemeColorPrimary">#ff212121</color>
-    <color name="nightThemeColorPrimaryDark">#ff000000</color>
-    <color name="nightThemeColorAccent">#ff80cbc4</color>
-
+    <!-- Your specific app colors (keep these if needed) -->
     <color name="class_color_1">#f1ff4949</color>
     <color name="class_color_2">#f0ff6e6e</color>
     <color name="class_color_3">#f0c992ff</color>
@@ -15,9 +8,50 @@
     <color name="class_color_5">#ef6e73ff</color>
     <color name="class_color_6">#f0ffaf49</color>
     <color name="class_color_7">#edffb7b7</color>
+    <color name="color_progress">#b0bbfa</color> <!-- Consider if this needs an M3 equivalent or can be themed -->
+    <color name="login_btn_color">#85C1D8</color> <!-- Consider if this can use M3 button styling + theme colors -->
 
-    <color name="color_progress">#b0bbfa</color>
-    <color name="color_progress_night">#f53e3e3e</color>
+    <!-- Material 3 Light Theme Colors (Based on a Blue Primary #0061A4) -->
+    <!-- You can regenerate these with your own primary color using https://m3.material.io/theme-builder -->
+    <color name="md_theme_light_primary">#0061A4</color>
+    <color name="md_theme_light_onPrimary">#FFFFFF</color>
+    <color name="md_theme_light_primaryContainer">#D1E4FF</color>
+    <color name="md_theme_light_onPrimaryContainer">#001D36</color>
+    <color name="md_theme_light_secondary">#535F70</color>
+    <color name="md_theme_light_onSecondary">#FFFFFF</color>
+    <color name="md_theme_light_secondaryContainer">#D7E3F7</color>
+    <color name="md_theme_light_onSecondaryContainer">#101C2B</color>
+    <color name="md_theme_light_tertiary">#6B5778</color>
+    <color name="md_theme_light_onTertiary">#FFFFFF</color>
+    <color name="md_theme_light_tertiaryContainer">#F2DAFF</color>
+    <color name="md_theme_light_onTertiaryContainer">#251431</color>
+    <color name="md_theme_light_error">#BA1A1A</color>
+    <color name="md_theme_light_errorContainer">#FFDAD6</color>
+    <color name="md_theme_light_onError">#FFFFFF</color>
+    <color name="md_theme_light_onErrorContainer">#410002</color>
+    <color name="md_theme_light_background">#FDFCFF</color>
+    <color name="md_theme_light_onBackground">#1A1C1E</color>
+    <color name="md_theme_light_surface">#FDFCFF</color>
+    <color name="md_theme_light_onSurface">#1A1C1E</color>
+    <color name="md_theme_light_surfaceVariant">#DFE2EB</color>
+    <color name="md_theme_light_onSurfaceVariant">#43474E</color>
+    <color name="md_theme_light_outline">#73777F</color>
+    <color name="md_theme_light_inverseOnSurface">#F1F0F4</color>
+    <color name="md_theme_light_inverseSurface">#2F3033</color>
+    <color name="md_theme_light_inversePrimary">#9FCAFF</color>
+    <color name="md_theme_light_shadow">#000000</color>
+    <color name="md_theme_light_surfaceTint">#0061A4</color>
+    <color name="md_theme_light_outlineVariant">#C3C6CF</color>
+    <color name="md_theme_light_scrim">#000000</color>
 
-    <color name="login_btn_color">#85C1D8</color>
+    <!-- Legacy aliases used by ThemeChangeUtil (light) -->
+    <color name="nightThemeColorPrimary">@color/md_theme_light_primary</color>
+    <color name="nightThemeColorAccent">@color/md_theme_light_secondary</color>
+
+    <!-- Legacy M2-style names some code still reads -->
+    <color name="colorPrimary">@color/md_theme_light_primary</color>
+    <color name="colorPrimaryDark">@color/md_theme_light_primary</color>
+    <color name="colorAccent">@color/md_theme_light_secondary</color>
+
+
 </resources>

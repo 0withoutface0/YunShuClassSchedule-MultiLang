@@ -128,7 +128,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         when (key) {
             DEFAULT_SHOW_MAIN_FRAGMENT -> {
                 defaultShowMainFragmentListPreference.summary = defaultShowMainFragmentListPreference.entry
@@ -158,8 +158,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
                 ThemeChangeUtil.changeColor()
             }
             NOW_WEEK_NUM -> {
-                nowWeekNumEditTextPreference.summary = sharedPreferences.getString(key, "1")
-                App.sharedPreferences.edit().putLong(ConstantPool.Str.NEXT_WEEK_OF_MONDAY.get(), getNextMondayOfTimeInMillis()).apply()
+                // use the fragment's prefs field to avoid nullability on the callback param
+                nowWeekNumEditTextPreference.summary = prefs.getString(NOW_WEEK_NUM, "1")
+                App.sharedPreferences.edit()
+                    .putLong(ConstantPool.Str.NEXT_WEEK_OF_MONDAY.get(), getNextMondayOfTimeInMillis())
+                    .apply()
                 EventBus.getDefault().post(EventEntity(ConstantPool.Int.TIME_TICK_CHANGE, ""))
             }
         }

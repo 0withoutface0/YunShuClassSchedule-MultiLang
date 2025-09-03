@@ -405,7 +405,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         intent.component = ComponentName(this, MainActivity::class.java)
         // 关键的一步，设置启动模式，两种情况
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-        val pendingIntent = PendingIntent.getActivity(this, 88, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(this, 88, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val builder = NotificationCompat.Builder(this, "foreground_service")
                 .setContentTitle(titleBuilder)
                 .setContentText(textBuilder)
@@ -420,9 +420,9 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
         startForeground(111, notification)
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == FOREGROUND_SERVICE_STATUS) {
-            if (sharedPreferences.getBoolean(FOREGROUND_SERVICE_STATUS, true)) {
+            if (sharedPreferences?.getBoolean(FOREGROUND_SERVICE_STATUS, true) == true) {
                 getNowCourseInfoArray()
                 setNotificationContentsIfOpen()
             } else {
@@ -430,6 +430,7 @@ class CourseInfoService : Service(), SharedPreferences.OnSharedPreferenceChangeL
             }
         }
     }
+
 
     companion object {
         private const val TAG = "CourseInfoService"

@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.res.Configuration
 import android.util.Log
+import com.google.android.material.color.DynamicColors
 import com.tencent.bugly.crashreport.CrashReport
 import org.greenrobot.eventbus.EventBus
 import top.itning.yunshuclassschedule.AppActivityIndex
@@ -24,6 +25,9 @@ class App : Application() {
     lateinit var daoSession: DaoSession
 
     override fun onCreate() {
+        super.onCreate()
+        //Material You dynamic colors
+        DynamicColors.applyToActivitiesIfAvailable(this)
         // 程序创建的时候执行
         //EventBus add Index
         EventBus.builder().addIndex(AppActivityIndex()).installDefaultEventBus()
@@ -34,7 +38,6 @@ class App : Application() {
         val db = helper.writableDb
         daoSession = DaoMaster(db).newSession()
         sharedPreferences = getSharedPreferences(ConstantPool.Str.SHARED_PREFERENCES_FILENAME.get(), Context.MODE_PRIVATE)
-        super.onCreate()
         LocaleHelper.applyAppLocale(this) // initializes default
     }
 

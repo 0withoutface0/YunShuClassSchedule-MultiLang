@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <plurals name="error_over_count">
+        <item quantity="one">%d error</item>
+        <item quantity="other">%d errors</item> <!-- required default -->
+    </plurals>
     <string name="app_name">云舒课表</string>
     <string name="navigation_drawer_open">打开导航抽屉</string>
     <string name="navigation_drawer_close">关闭导航抽屉</string>
@@ -259,5 +264,9 @@
     <string name="last_class">这是最后一节课</string>
     <string name="time_until_class">还有%1$d分钟上课</string>
     <string name="time_until_end">还有%1$d分钟下课</string>
+
+    <string name="toast_enable_exact_alarm">Please allow “Exact alarms” for this app to schedule precise class reminders.</string>
+    <string name="toast_enable_exact_alarm_settings">Open Settings → Apps → Special app access → Alarms and reminders → Allow.</string>
+
 
 </resources>

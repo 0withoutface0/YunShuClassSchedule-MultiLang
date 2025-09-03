@@ -164,8 +164,11 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             clearAlarm()
             initTimeList()
             initPendingIntentList()
-            addToAlarm()
+
+            val canUseExact = ensureExactAlarmPermissionOrOpenSettings()
+            addToAlarm(canUseExact)
         }
+
         if (wakeLock.isHeld) {
             wakeLock.release()
         }
@@ -193,7 +196,7 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             }
             timeList.add(time)
             Log.d(TAG, "time list add $time")
-            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, upIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, upIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             pendingIntentList.add(pendingIntent)
             requestCode++
         }
@@ -204,7 +207,7 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
             }
             timeList.add(time)
             Log.d(TAG, "time list add $time")
-            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, downIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+            val pendingIntent = PendingIntent.getBroadcast(this, requestCode, downIntent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
             pendingIntentList.add(pendingIntent)
             requestCode++
         }
@@ -339,22 +342,48 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
     /**
      * 添加到提醒
      */
-    private fun addToAlarm() {
-        Log.d(TAG, "start add to alarm")
+    private fun addToAlarm(canUseExact: Boolean) {
+        Log.d(TAG, "start add to alarm; canUseExact=$canUseExact")
         var index = 0
-        pendingIntentList.forEach {
+        pendingIntentList.forEach { pi ->
+            val triggerAt = timeList[index]
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Log.d(TAG, "Build.VERSION.SDK_INT:" + Build.VERSION.SDK_INT)
-                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, timeList[index], it)
+                if (canUseExact) {
+                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, triggerAt, pi)
+                } else {
+                    // Fallback: inexact window (5 minutes). Adjust window as you like.
+                    alarmManager.setWindow(AlarmManager.RTC_WAKEUP, triggerAt, 5 * 60_000L, pi)
+                }
             } else {
-                alarmManager.setExact(AlarmManager.RTC_WAKEUP, timeList[index], it)
+                // Pre-M: setExact exists but no doze; keep exact
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, triggerAt, pi)
             }
-            calendar.timeInMillis = timeList[index]
-            Log.d(TAG, "add alarm " + calendar.get(Calendar.HOUR_OF_DAY) + ":" + calendar.get(Calendar.MINUTE))
+            calendar.timeInMillis = triggerAt
+            Log.d(TAG, "scheduled ${calendar.get(Calendar.HOUR_OF_DAY)}:${calendar.get(Calendar.MINUTE)}")
             index++
         }
         Log.d(TAG, "add $index task")
     }
+
+
+    private fun ensureExactAlarmPermissionOrOpenSettings(): Boolean {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.S) return true
+        val am = getSystemService(Context.ALARM_SERVICE) as AlarmManager
+        if (am.canScheduleExactAlarms()) return true
+
+        // Ask user to allow exact alarms (works when you declared SCHEDULE_EXACT_ALARM)
+        try {
+            val i = Intent(android.provider.Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+            i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(i)
+            Toast.makeText(this, getString(R.string.toast_enable_exact_alarm), Toast.LENGTH_LONG).show()
+        } catch (_: Exception) {
+            // Settings intent might be unavailable on some OEMs; just inform the user
+            Toast.makeText(this, getString(R.string.toast_enable_exact_alarm_settings), Toast.LENGTH_LONG).show()
+        }
+        return false
+    }
+
 
     /**
      * 发送通知
@@ -371,7 +400,7 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
         intent.component = ComponentName(this, MainActivity::class.java)
         // 关键的一步，设置启动模式，两种情况
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-        val pendingIntent = PendingIntent.getActivity(this, 99, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(this, 99, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         val builder = NotificationCompat.Builder(this, "class_reminder")
                 .setContentTitle(contentTitle)
@@ -388,25 +417,26 @@ class RemindService : Service(), SharedPreferences.OnSharedPreferenceChangeListe
     }
 
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == FOREGROUND_SERVICE_STATUS) {
-            if (sharedPreferences.getBoolean(FOREGROUND_SERVICE_STATUS, true)) {
+            if (sharedPreferences?.getBoolean(FOREGROUND_SERVICE_STATUS, true) == true) {
                 ClassScheduleUtils.startForegroundServer(this, TAG)
             } else {
                 stopForeground(true)
             }
         }
         if (key == CLASS_REMINDER_DOWN_STATUS
-                || key == CLASS_REMINDER_UP_STATUS
-                || key == PHONE_MUTE_STATUS
-                || key == PHONE_MUTE_BEFORE_TIME
-                || key == PHONE_MUTE_AFTER_TIME
-                || key == CLASS_REMINDER_UP_TIME
-                || key == CLASS_REMINDER_DOWN_TIME) {
+            || key == CLASS_REMINDER_UP_STATUS
+            || key == PHONE_MUTE_STATUS
+            || key == PHONE_MUTE_BEFORE_TIME
+            || key == PHONE_MUTE_AFTER_TIME
+            || key == CLASS_REMINDER_UP_TIME
+            || key == CLASS_REMINDER_DOWN_TIME) {
             Log.d(TAG, "Preference Changed , now Init Data")
             initData()
         }
     }
+
 
     companion object {
         private const val TAG = "RemindService"

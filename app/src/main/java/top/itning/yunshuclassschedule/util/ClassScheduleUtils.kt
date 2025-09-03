@@ -377,7 +377,7 @@ object ClassScheduleUtils {
         intent.component = ComponentName(service, MainActivity::class.java)
         // 关键的一步，设置启动模式，两种情况
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED
-        val pendingIntent = PendingIntent.getActivity(service, 88, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(service, 88, intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
         val builder = NotificationCompat.Builder(service, "foreground_service")
                 .setContentTitle(service.getString(R.string.app_name))
                 .setContentText(service.getString(R.string.notification_reminder_service_running))

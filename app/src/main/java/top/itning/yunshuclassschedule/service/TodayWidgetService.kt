@@ -68,15 +68,16 @@ class TodayWidgetService : Service(), SharedPreferences.OnSharedPreferenceChange
         }
     }
 
-    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences?, key: String?) {
         if (key == SettingsFragment.FOREGROUND_SERVICE_STATUS) {
-            if (sharedPreferences.getBoolean(SettingsFragment.FOREGROUND_SERVICE_STATUS, true)) {
+            if (sharedPreferences?.getBoolean(SettingsFragment.FOREGROUND_SERVICE_STATUS, true) == true) {
                 ClassScheduleUtils.startForegroundServer(this, TAG)
             } else {
                 stopForeground(true)
             }
         }
     }
+
 
     companion object {
         private const val TAG = "TodayWidgetService"
